@@ -1,0 +1,9 @@
+
+.forgot-pwd a{
+    font-size: 14px;
+    margin: 0px 0px 3px;
+    text-decoration: none;
+    color: #656565;
+    display: block;
+    text-align: right;
+}

@@ -1,0 +1,32 @@
+.m-toggle{
+    padding: 8px 34px;
+    background-color: #063dbe;
+    color: white;
+}
+.m-filter-toggle{
+    margin-left: -30px;
+}
+.m-cart-toggle{
+    margin-left: 30px;
+    padding: 0;
+}
+.dark-blue {
+    background-color: #073DBE;
+    border-radius: 0;
+}
+.off-canvas label{
+    color:white
+}
+@media only screen and (max-width: 480px) {
+    #slide-posts, #filters,#post-content,#cart{
+        display: none !important;
+    }
+    
+    #mobile-filter-cart-nav{
+        display: flex;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        padding: 20px 0;
+    }
+}
