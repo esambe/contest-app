@@ -27,6 +27,11 @@
         <form action="{{ route('update-contest', $contest->id) }}" method="post">
             @csrf
             <div class="form-group">
+                <div class="d-flex justify-content-center">
+                    <div class="avatar avatar-xs"><img src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/15535839/original/e71daeb2a7bb11198ed957466ab6e088f341c387/create-pixel-art-for-you.png" class="rounded-circle" alt=""></div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="name">CONTEST NAME</label>
                 <input type="text" name="name" class="form-control phone-inputs @error('name') is-invalid @enderror" value="{{ $contest->name }}" placeholder="Contest name">
                 @error('name')

@@ -43,8 +43,19 @@
         <form action="{{ route('add-contest') }}" method="post">
             @csrf
             <div class="form-group">
+                <div class="d-flex justify-content-center mb-3">
+                    <div class="avatar avatar-xxl bordered">
+                        <img src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/15535839/original/e71daeb2a7bb11198ed957466ab6e088f341c387/create-pixel-art-for-you.png" class="rounded" alt="">
+                    </div>
+                </div>
+                <div class="upload-text m-auto wd-250">
+                    <p class="tx-center"><strong>Upload Contest image</strong></p>
+                    <input type="file" name="contest_image" class="upload-input">
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="name">CONTEST NAME</label>
-                <input type="text" name="name" class="form-control phone-inputs @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Contest name">
+                <input type="text" name="name" class="form-control phone-inputs @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Contest name" autocomplete="off">
                 @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -53,7 +64,7 @@
             </div>
             <div class="form-group">
                 <label for="description">DESCRIPTION</label>
-                <textarea name="description" class="form-control phone-inputs @error('description') is-invalid @enderror" id="" placeholder="Say something...">{{ old('description') }}</textarea>
+                <textarea name="description" class="form-control phone-inputs @error('description') is-invalid @enderror" id="" placeholder="Say something..." autocomplete="off">{{ old('description') }}</textarea>
                 @error('description')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -63,7 +74,7 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <label for="name">START DATE</label>
-                    <input type="text" id="dateFrom" name="start_date" class="form-control phone-inputs @error('start_date') is-invalid @enderror" value="{{ old('start_date') }}" placeholder="start date">
+                    <input type="text" id="dateFrom" name="start_date" class="form-control phone-inputs @error('start_date') is-invalid @enderror" value="{{ old('start_date') }}" placeholder="start date" autocomplete="off">
                     @error('start_date')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -72,7 +83,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="name">END DATE</label>
-                    <input type="text" id="dateTo" name="end_date" class="form-control phone-inputs @error('end_date') is-invalid @enderror" value="{{ old('end_date') }}" placeholder="end date">
+                    <input type="text" id="dateTo" name="end_date" class="form-control phone-inputs @error('end_date') is-invalid @enderror" value="{{ old('end_date') }}" placeholder="end date" autocomplete="off">
                     @error('send_date')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
