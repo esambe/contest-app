@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contest;
 use App\Contestant;
 use Illuminate\Http\Request;
+use Image;
 
 class ContestController extends Controller
 {
@@ -44,8 +45,23 @@ class ContestController extends Controller
             'name' => 'required|string',
             'description' => 'required|string',
             'start_date'  => 'required',
-            'end_date'  => 'required'
+            'end_date'  => 'required',
+            'img' => 'mimes:jpg,jpeg,png,bmp,tiff |max:4096'
         ]);
+
+        if($request->file('img')) {
+            // Processing Image
+            $originalImage  = $request->file('img');
+            $thumbnailImage = Image::make($originalImage);
+            $thumbnailPath  = public_path().'/thumbnail/';
+            $originalPath   = public_path().'/uploads/';
+            $thumbnailImage->save($originalPath.time().$originalImage->getClientOriginalName());
+
+            $thumbnailImage->resize(150,150);
+            $thumbnailImage->save($thumbnailPath.time().$originalImage->getClientOriginalName());
+            // End image procesing
+            $contest->img = time().$originalImage->getClientOriginalName();
+        }
 
         $contest->name = $request->name;
         $contest->description = $request->description;
@@ -101,6 +117,20 @@ class ContestController extends Controller
             'start_date'  => 'required',
             'end_date'  => 'required'
         ]);
+
+        if($request->file('img')) {
+            // Processing Image
+            $originalImage  = $request->file('img');
+            $thumbnailImage = Image::make($originalImage);
+            $thumbnailPath  = public_path().'/thumbnail/';
+            $originalPath   = public_path().'/uploads/';
+            $thumbnailImage->save($originalPath.time().$originalImage->getClientOriginalName());
+
+            $thumbnailImage->resize(150,150);
+            $thumbnailImage->save($thumbnailPath.time().$originalImage->getClientOriginalName());
+            // End image procesing
+            $contest->img = time().$originalImage->getClientOriginalName();
+        }
 
         $contest->name = $request->name;
         $contest->description = $request->description;

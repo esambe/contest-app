@@ -45,12 +45,12 @@
             <div class="form-group">
                 <div class="d-flex justify-content-center mb-3">
                     <div class="avatar avatar-xxl bordered">
-                        <img src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/15535839/original/e71daeb2a7bb11198ed957466ab6e088f341c387/create-pixel-art-for-you.png" class="rounded" alt="">
+                        <img id="target" src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/15535839/original/e71daeb2a7bb11198ed957466ab6e088f341c387/create-pixel-art-for-you.png" class="rounded" alt="">
                     </div>
                 </div>
                 <div class="upload-text m-auto wd-250">
                     <p class="tx-center"><strong>Upload Contest image</strong></p>
-                    <input type="file" name="contest_image" class="upload-input">
+                    <input type="file" name="img" class="upload-input" id="file-picker">
                 </div>
             </div>
             <div class="form-group">
@@ -101,4 +101,19 @@
 
 @section('scripts')
     <script src="{{ asset('/assets/js/home-script.js') }}"></script>
+    <script>
+        function showImage(src,target) {
+            var fr=new FileReader();
+            // when image is loaded, set the src of the image where you want to display it
+            fr.onload = function(e) { target.src = this.result; };
+            src.addEventListener("change",function() {
+                // fill fr with image data
+                fr.readAsDataURL(src.files[0]);
+            });
+        }
+
+        var src = document.getElementById("file-picker");
+        var target = document.getElementById("target");
+        showImage(src,target)
+    </script>
 @endsection
