@@ -41,6 +41,19 @@
     </div>
 @endif
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <!-- Ranking -->
 <div class="modal fade" id="ranking" tabindex="-1" data-backdrop="static" data-keyboard="false"  role="dialog" aria-labelledby="rankingTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -85,7 +98,7 @@
             <div class="card shadow-lg">
                 <div class="avatar avatar-xxl card-avatar">
                     {{--  <span class="avatar-initial rounded-circle">df</span>  --}}
-                    <img src="https://www.w3schools.com/howto/img_avatar2.png" class="rounded-circle avatar-img" alt="">
+                    <img src="{{ $contestant->user_img ? asset('/thumbnail/'.$contestant->user_img) : 'https://www.gravatar.com/avatar/EMAIL_MD5?d=https%3A%2F%2Fui-avatars.com%2Fapi%2F/Lasse+Rafn/128' }}" class="rounded-circle avatar-img" alt="">
                 </div>
                 <div class="card-body">
                     <p class="tx-16 tx-bold text-center">{{ $contestant->name}}</p>
@@ -121,8 +134,9 @@
                                             @csrf
                                             <input type="hidden" name="contest_id" value="{{ $contest->id}}">
                                             <input type="hidden" name="contestant_id" value="{{ $contestant->id}}">
+                                            <input type="hidden" name="payment_method" value="mtn">
                                             <div class="form-group">
-                                                <input type="text" class="form-control phone-inputs" placeholder="Enter MTN MoMo number">
+                                                <input type="text" class="form-control phone-inputs" placeholder="Enter MTN MoMo number" name="number">
                                             </div>
                                             <button class="btn btn-cancel btn-block">PROCEED</button>
                                         </form>
@@ -132,8 +146,9 @@
                                             @csrf
                                             <input type="hidden" name="contest_id" value="{{ $contest->id}}">
                                             <input type="hidden" name="contestant_id" value="{{ $contestant->id}}">
+                                            <input type="hidden" name="payment_method" value="orange">
                                             <div class="form-group">
-                                                <input type="text" class="form-control phone-inputs" placeholder="Enter Orange MoMo number">
+                                                <input type="text" class="form-control phone-inputs" placeholder="Enter Orange MoMo number" name="number">
                                             </div>
                                             <button class="btn btn-cancel btn-block">PROCEED</button>
                                         </form>

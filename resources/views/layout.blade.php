@@ -10,14 +10,14 @@
     <meta name="twitter:site" content="@themepixels">
     <meta name="twitter:creator" content="@themepixels">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="DashForge">
-    <meta name="twitter:description" content="Responsive Bootstrap 4 Dashboard Template">
+    <meta name="twitter:title" content="Contest">
+    <meta name="twitter:description" content="Contest App">
     <meta name="twitter:image" content="http://themepixels.me/dashforge/img/dashforge-social.png">
 
     <!-- Facebook -->
     <meta property="og:url" content="http://themepixels.me/dashforge">
-    <meta property="og:title" content="DashForge">
-    <meta property="og:description" content="Responsive Bootstrap 4 Dashboard Template">
+    <meta property="og:title" content="Contest App">
+    <meta property="og:description" content="Contest App">
 
     <meta property="og:image" content="http://themepixels.me/dashforge/img/dashforge-social.png">
     <meta property="og:image:secure_url" content="http://themepixels.me/dashforge/img/dashforge-social.png">
@@ -26,13 +26,13 @@
     <meta property="og:image:height" content="600">
 
     <!-- Meta -->
-    <meta name="description" content="Responsive Bootstrap 4 Dashboard Template">
-    <meta name="author" content="ThemePixels">
+    <meta name="description" content="Contest Application">
+    <meta name="author" content="Esambe">
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/img/favicon.png">
 
-    <title>DashForge Responsive Bootstrap 4 Dashboard Template</title>
+    <title>Contest App</title>
 
     <!-- vendor css -->
     <link href="{{ asset('/assets/lib/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">

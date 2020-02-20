@@ -61,7 +61,20 @@
                 @foreach ($contest->contestants as $contestant)
                     <tr>
                         <td>{{ $contestant->id }}</td>
-                        <td>{{ $contestant->name }}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar avatar-sm">
+                                    @if ($contestant->user_img)
+                                        <img src="{{ asset('/thumbnail/'.$contestant->user_img) }}" class="rounded-circle" alt="">
+                                        @else
+                                        <span class="avatar-initial rounded-circle">CT</span>
+                                    @endif
+                                </div>
+                                <div class="ml-3">
+                                    {{ $contestant->name }}
+                                </div>
+                            </div>
+                        </td>
                         <td>{{ $contestant->email }}</td>
                         <td>{{ $contestant->phone }}</td>
                         <td>{{ $contestant->city }}</td>
@@ -85,15 +98,19 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('add-contestant') }}" method="post">
+                        <form action="{{ route('add-contestant') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group d-flex justify-content-center">
-                                <div class="avatar avatar-xxl">
-                                    <img src="https://www.w3schools.com/howto/img_avatar2.png" class="rounded-circle" alt="">
+                            <div class="form-group">
+                                <div class="d-flex justify-content-center mb-3">
+                                    <div class="avatar avatar-xxl bordered">
+                                        <img src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/15535839/original/e71daeb2a7bb11198ed957466ab6e088f341c387/create-pixel-art-for-you.png" class="rounded" alt="">
+                                    </div>
+                                </div>
+                                <div class="upload-text m-auto wd-250">
+                                    <p class="tx-center"><strong>Upload Contest image</strong></p>
+                                    <input type="file" class="upload-input" name="user_img">
                                 </div>
                             </div>
-                            <h6 class="text-center mb-3">Upload Image</h6>
-
                             <input type="hidden" name="contest_id" value="{{ $contest->id }}">
                             <div class="form-group row">
                                 <div class="col-md-6">

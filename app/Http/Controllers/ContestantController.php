@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contestant;
 use Illuminate\Http\Request;
+use Image;
 
 class ContestantController extends Controller
 {
@@ -43,15 +44,30 @@ class ContestantController extends Controller
             'city'  => 'required|string',
             'phone' => 'required|string',
             'description' => 'required|string',
-            'contest_id' => 'required'
+            'contest_id' => 'required',
+            'user_img' => 'required|mimes:jpg,jpeg,png,bmp,tiff |max:4096'
         ]);
 
-        $contestant->name = $request->name;
-        $contestant->email = $request->email;
-        $contestant->city = $request->city;
-        $contestant->phone = $request->phone;
-        $contestant->description = $request->description;
-        $contestant->contest_id = $request->contest_id;
+        if($request->file('user_img')) {
+            // Processing Image
+            $originalImage  = $request->file('user_img');
+            $thumbnailImage = Image::make($originalImage);
+            $thumbnailPath  = public_path().'/thumbnail/';
+            $originalPath   = public_path().'/uploads/';
+            $thumbnailImage->save($originalPath.time().$originalImage->getClientOriginalName());
+
+            $thumbnailImage->resize(150,150);
+            $thumbnailImage->save($thumbnailPath.time().$originalImage->getClientOriginalName());
+            // End image procesing
+            $contestant->user_img = time().$originalImage->getClientOriginalName();
+        }
+
+        $contestant->name           = $request->name;
+        $contestant->email          = $request->email;
+        $contestant->city           = $request->city;
+        $contestant->phone          = $request->phone;
+        $contestant->description    = $request->description;
+        $contestant->contest_id     = $request->contest_id;
         $contestant->save();
 
         return back()->with('success', 'Contestant added with success');
@@ -101,13 +117,27 @@ class ContestantController extends Controller
             'contest_id' => 'required'
         ]);
 
+
+        if($request->file('user_img')) {
+            // Processing Image
+            $originalImage  = $request->file('user_img');
+            $thumbnailImage = Image::make($originalImage);
+            $thumbnailPath  = public_path().'/thumbnail/';
+            $originalPath   = public_path().'/uploads/';
+            $thumbnailImage->save($originalPath.time().$originalImage->getClientOriginalName());
+
+            $thumbnailImage->resize(150,150);
+            $thumbnailImage->save($thumbnailPath.time().$originalImage->getClientOriginalName());
+            // End image procesing
+            $contestant->user_img = time().$originalImage->getClientOriginalName();
+        }
+
         $contestant->name = $request->name;
         $contestant->email = $request->email;
         $contestant->city = $request->city;
         $contestant->phone = $request->phone;
         $contestant->description = $request->description;
         $contestant->contest_id = $request->contest_id;
-
         $contestant->save();
 
         return back()->with('success', 'Contestant updated with success');
