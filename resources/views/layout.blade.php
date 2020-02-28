@@ -58,7 +58,7 @@
         <div class="container">
             <a href="" id="mainMenuOpen" class="burger-menu"><i data-feather="menu"></i></a>
             <div class="navbar-brand">
-            <a href="{{ url('/') }}" class="df-logo">Cont<span>est</span></a>
+            <a href="{{ url('/') }}" class="df-logo logo-text">CONT<span>EST</span></a>
             </div><!-- navbar-brand -->
             <div id="navbarMenu" class="navbar-menu-wrapper">
             <div class="navbar-menu-header">
