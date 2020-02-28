@@ -144,6 +144,7 @@
     <script src="{{ asset('/lib/js-cookie/js.cookie.js') }}"></script>
     <script src="{{ asset('/assets/js/dashforge.settings.js') }}"></script>
 
+    <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script>
     @yield('scripts')
 
     <script>

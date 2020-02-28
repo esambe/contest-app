@@ -59,7 +59,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Ranking Statitics</h5>
+                <h5 class="modal-title header-text">Ranking Statistics</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -73,7 +73,7 @@
                             </div>
                             <div class="d-flex align-items-center">
                                 <div class="avatar avatar-xs mr-2"><img src="https://www.w3schools.com/howto/img_avatar2.png" class="rounded-circle" alt=""></div>
-                                {{ $contestant->name }}
+                                <span class="secondary-text">{{ $contestant->name }}</span>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -89,7 +89,7 @@
 </div>
 
 <div class="py-3">
-
+    <h4 class="mg-b-0 tx-spacing--1 text-white header-text">Welcome to - <span class="secondary-text">{{ $contest->name }}</span></h4>
 </div>
 
 <div class="row row-xs bg-gray">
@@ -101,16 +101,19 @@
                     <img src="{{ $contestant->user_img ? asset('/thumbnail/'.$contestant->user_img) : 'https://www.gravatar.com/avatar/EMAIL_MD5?d=https%3A%2F%2Fui-avatars.com%2Fapi%2F/Lasse+Rafn/128' }}" class="rounded-circle avatar-img" alt="">
                 </div>
                 <div class="card-body">
-                    <p class="tx-16 tx-bold text-center">{{ $contestant->name}}</p>
+                    <p class="tx-16 tx-bold text-center secondary-text tx-22">{{ $contestant->name}}</p>
                     <p class="tx-15 text-center tx-gray-500"><i class="fa fa-map-marker"></i> {{ $contestant->city }}</p>
                     <p class="tx-15 text-center">{{ $contestant->votes->last()->vote_count ?? '0' }} Votes</p>
                     <div class="card-footer">
-                        <div class="d-flex justify-content-center">
-                            <button data-toggle="modal" data-target="#payment{{ $contestant->id }}" aria-expanded="false" class="btn btn-vote btn-block">Vote</button>
+                        <div class="">
+                            <div class="btn-group btn-block">
+                                <button data-toggle="modal" data-target="#detail{{ $contestant->id }}" aria-expanded="false" class="btn btn-secondary">Detail</button>
+                                <button data-toggle="modal" data-target="#payment{{ $contestant->id }}" aria-expanded="false" class="btn btn-vote">Vote</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Modal -->
+                <!-- Modal to vote -->
                 <div class="modal fade" id="payment{{ $contestant->id }}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="paymentTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
@@ -120,6 +123,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
+                                <form action="" method="get" data-monetbil="form"><button class="" type="submit">Pay by Mobile Money</button></form>
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="mtn-tab" data-toggle="tab" href="#mtn{{ $contestant->id }}" role="tab" aria-controls="mtn" aria-selected="true">MTN</a>
@@ -158,6 +162,29 @@
                         </div>
                     </div>
                 </div>
+                <!-- Modal to view more detail -->
+                <div class="modal fade" id="detail{{ $contestant->id }}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="paymentTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="d-flex align-items-center pb-3">
+                                        <div class="avatar avatar-lg">
+                                            <img src="{{ $contestant->user_img ? asset('/thumbnail/'.$contestant->user_img) : 'https://www.gravatar.com/avatar/EMAIL_MD5?d=https%3A%2F%2Fui-avatars.com%2Fapi%2F/Lasse+Rafn/128' }}" class="rounded-circle avatar-img" alt="">
+                                        </div>
+                                        <h2 class="secondary-text pl-3">{{ $contestant->name }}</h2>
+                                    </div>
+                                    <p>
+                                        {{ $contestant->description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     @endforeach

@@ -1,11 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Monoton&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Monoton|UnifrakturCook:700&display=swap');
+
 body {
-    background-image: linear-gradient(to bottom right, rgba(23, 37, 42, 0.918), rgba(23, 37, 42, 0.5)), url('./../imgs/bg.jpg');
+    background-image: linear-gradient(to bottom right, rgb(58, 16, 211), rgba(44, 9, 245, 0)), url('./../imgs/bg3.jpg');
     background-position: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     background-size: 100%;
 }
+
+
 
 .btn-vote {
     background-color: #b9001f;
@@ -111,6 +116,15 @@ div.modal-content {
     padding: 3px;
 }
 
+.header-text {
+    font-family: 'Monoton';
+    font-size: 2rem;
+}
+
+.secondary-text {
+    font-family: 'UnifrakturCook';
+}
+
 /* Card image wrapper */
 .wrapper {
     position: relative;
@@ -120,7 +134,7 @@ div.modal-content {
   .wrapper:after {
     content: '';
     display: block;
-    padding-top: 100%;
+    padding-top: 50%;
   }
 
   .wrapper img {

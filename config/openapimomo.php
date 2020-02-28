@@ -16,7 +16,8 @@ return [
     |
     */
 
-    'environment' => 'sandbox',
+    // 'environment' => 'sandbox',
+    'environment' => 'mtncameroon',
     'currency' => 'XAF',
     'party_id_type' => 'MSISDN',
     'transaction_id' => Illuminate\Support\Str::uuid(),
@@ -40,8 +41,8 @@ return [
     |   sandbox_collection_api_key      - collection api key for sandbox
     */
 
-    'collection_user_id' => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', //change this to your production collection user -- required
-    'collection_api_key' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', //change this to your production collection api key -- required
+    'collection_user_id' => '1e6f2659-901a-4388-822f-44bfa3900a5e', //change this to your production collection user -- required
+    'collection_api_key' => 'e933cfa2a22b4302abf246f3487465f7', //change this to your production collection api key -- required
 
     'sandbox_collection_user_id' => '66516e7b-42a8-479e-a907-c8a75d1989ef', //change this to your sandbox collection user -- required
     'sandbox_collection_api_key'=> '838459154cbf43f99bdc5ae113c0e232', //change this to your sandbox collection api key -- required
@@ -58,7 +59,7 @@ return [
     |   sandbox_collection_token_url        - collection token url for sandbox
     */
 
-    'collection_ocp_apim_sub_key'=> 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', //change this to your collection Ocp-Apim-Subscription-Key -- required
+    'collection_ocp_apim_sub_key'=> 'd5ea6daf31b14c0ab2d230e1c94291f4', //change this to your collection Ocp-Apim-Subscription-Key -- required
     'collection_token_url'=> 'https://ericssonbasicapi1.azure-api.net/collection/token/',
 
     'sandbox_collection_ocp_apim_sub_key'=>'8e686b4a7f7c4c18abc2ae7431629a18', //change this to your collection  Ocp-Apim-Subscription-Key -- required

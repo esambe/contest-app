@@ -9,8 +9,8 @@
     </div>
 </div> --}}
 <div class="mt-3">
-    <h4 class="mg-b-0 tx-spacing--1 text-white">Welcome to Dashboard</h4>
-    <p class="text-white tx-14">
+    <h4 class="mg-b-0 tx-spacing--1 text-white header-text">Welcome to Dashboard</h4>
+    <p class="text-white tx-20 secondary-text">
         Below is a list of contest which are currently active. Visit one of them to vote.
     </p>
 </div>
@@ -22,7 +22,7 @@
                     <img src="{{ $contest->img ? asset('/thumbnail/'.$contest->img) : 'https://i.ytimg.com/vi/6BiqdXF9wNw/maxresdefault.jpg' }}" class="card-img-top" alt="">
                 </div>
                 <div class="card-body">
-                    <p class="tx-16 tx-bold text-center tx-gray-500">{{ $contest->name }}</p>
+                    <p class="tx-16 tx-bold text-center tx-gray-500 secondary-text">{{ $contest->name }}</p>
                     <div class="card-footer">
                         <div class="d-flex justify-content-center">
                             <a href="{{ route('single-contest', $contest->id) }}" class="btn btn-cancel btn-block">GOTO CONTEST</a>
