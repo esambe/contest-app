@@ -25,7 +25,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', 'ContestController@index')->name('dashboard');
 
-
     // CONTEST
     Route::get('/create/contest', 'ContestController@create')->name('create-contest');
     Route::get('/edit/contest/{id}', 'ContestController@edit')->name('edit-contest');
