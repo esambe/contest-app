@@ -13,16 +13,18 @@
 
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/contest/contestant/{id}', 'HomeController@singleContest')->name('single-contest');
 Route::post('/vote', 'PaymentController@vote')->name('vote');
 
+
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', 'ContestController@index')->name('dashboard');
+
 
     // CONTEST
     Route::get('/create/contest', 'ContestController@create')->name('create-contest');
