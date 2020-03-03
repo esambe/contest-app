@@ -142,11 +142,12 @@ div.modal-content {
   }
 
   .wrapper img {
-    width: auto;
-    height: 115%;
+    /* width: auto; */
+    height: 100%;
     max-width: none;
     position: absolute;
     left: 50%;
     top: 0;
     transform: translateX(-50%);
-  }
+    object-fit: cover;
+}
