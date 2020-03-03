@@ -1,28 +1,45 @@
 @extends('layout')
 
-@section('content')
-<div class="d-sm-flex align-items-center pt-3 justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
-    <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mg-b-0">
-                <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i>{{ __(' Home') }}</a></li>
-                @guest
-                    @else
-                    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('dashboard') }}"><i class="fa fa-th-large"></i>{{ __(' Dashboard') }}</a></li>
-                @endguest
-                <li class="breadcrumb-item active" aria-current="page">{{ $contest->name }}</li>
-            </ol>
-        </nav>
-    </div>
-    <div class="d-none d-md-block">
-        @if ($contestants->count() != 0)
-            <button class="btn btn-cancel" data-toggle="modal" data-target="#ranking">RANKING</button>
-        @else
-            <button class="btn btn-cancel" disabled="disabled">RANKING</button>
-        @endif
-    </div>
-</div>
+@section('styles')
+    <style>
+        .banner {
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3)),
+            url('{{ asset('/uploads/'.$contest->img) }}');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+         }
+    </style>
+@endsection
 
+@section('hero')
+    <div class="jumbotron banner">
+        <h4 class="mg-b-0 tx-spacing--1 header-text text-white">Welcome to - <span class="secondary-text">{{ $contest->name }}</span></h4>
+        <p class="lead text-white">{{ $contest->description }}</p>
+        <hr class="my-4">
+        <p class="lead">
+            @if ($contestants->count() != 0)
+                <button class="btn btn-cancel" data-toggle="modal" data-target="#ranking">RANKING</button>
+            @else
+                <button class="btn btn-cancel" disabled="disabled">RANKING</button>
+            @endif
+        </p>
+        <div class="d-flex">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mg-b-0">
+                    <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i>{{ __(' Home') }}</a></li>
+                    @guest
+                        @else
+                        <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('dashboard') }}"><i class="fa fa-th-large"></i>{{ __(' Dashboard') }}</a></li>
+                    @endguest
+                    <li class="breadcrumb-item active" aria-current="page">{{ $contest->name }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+@endsection
+
+@section('content')
 @if (session('success'))
     <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -87,15 +104,10 @@
         </div>
     </div>
 </div>
-
-<div class="py-3">
-    <h4 class="mg-b-0 tx-spacing--1 text-white header-text">Welcome to - <span class="secondary-text">{{ $contest->name }}</span></h4>
-</div>
-
 <div class="row row-xs bg-gray">
     @foreach ($contestants as $contestant)
         <div class="col-sm-6 col-lg-3">
-            <div class="card shadow-lg">
+            <div class="card shadow-lg mb-3">
                 <div class="avatar avatar-xxl card-avatar">
                     {{--  <span class="avatar-initial rounded-circle">df</span>  --}}
                     <img src="{{ $contestant->user_img ? asset('/thumbnail/'.$contestant->user_img) : 'https://www.gravatar.com/avatar/EMAIL_MD5?d=https%3A%2F%2Fui-avatars.com%2Fapi%2F/Lasse+Rafn/128' }}" class="rounded-circle avatar-img" alt="">

@@ -17,9 +17,9 @@
 <div class="row row-xs">
     @foreach ($contests as $contest)
         <div class="col-sm-6 col-lg-3">
-            <div class="card shadow-lg">
+            <div class="card shadow-lg mb-3">
                 <div class="wrapper">
-                    <img src="{{ $contest->img ? asset('/thumbnail/'.$contest->img) : 'https://i.ytimg.com/vi/6BiqdXF9wNw/maxresdefault.jpg' }}" class="card-img-top" alt="">
+                    <img src="{{ $contest->img ? asset('/uploads/'.$contest->img) : 'https://i.ytimg.com/vi/6BiqdXF9wNw/maxresdefault.jpg' }}" class="card-img-top" alt="">
                 </div>
                 <div class="card-body">
                     <p class="tx-16 tx-bold text-center tx-gray-500 secondary-text">{{ $contest->name }}</p>

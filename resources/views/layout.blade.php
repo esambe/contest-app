@@ -51,6 +51,7 @@
     <link href="{{ asset('/assets/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/assets/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    @yield('styles')
   </head>
   <body class="page-profile" style="min-height: 100vh">
 
@@ -95,9 +96,10 @@
                 </div>
             @endguest
         </div>
-      <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
-        @yield('content')
-      </div><!-- container -->
+    @yield('hero')
+    <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
+    @yield('content')
+    </div><!-- container -->
     </div><!-- content -->
 
     <footer class="footer">
