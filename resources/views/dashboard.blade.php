@@ -27,6 +27,7 @@
                 {{ session('danger') }}
             </div>
         @endif
+
         <table id="contest" class="table">
             <thead>
                 <th class="wp-10">{{ __('#ID') }}</th>
@@ -43,8 +44,8 @@
                         <td>{{ $contest->start_date }}</td>
                         <td>{{ $contest->end_date }}</td>
                         <td class="d-flex">
-                            <a href="{{ route('edit-contest', $contest->id) }}" class="btn btn-outline text-primary"><i class="fa fa-pencil"> Edit</i></a>
-                            <a href="{{ route('show-contest', $contest->id) }}" class="btn btn-outline text-success"><i class="fa fa-eye"> Goto</i></a>
+                            <a href="{{ $contest->editPath() }}" class="btn btn-outline text-primary"><i class="fa fa-pencil"> Edit</i></a>
+                            <a href="{{ $contest->showPath() }}" class="btn btn-outline text-success"><i class="fa fa-eye"> Goto</i></a>
                             <a href="{{ route('delete-contest', $contest->id) }}" class="btn btn-outline text-danger"><i class="fa fa-trash"> Delete</i></a>
                         </td>
                     </tr>

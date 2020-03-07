@@ -17,7 +17,7 @@ Auth::routes(['register' => false]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/contest/contestant/{id}', 'HomeController@singleContest')->name('single-contest');
+Route::get('/contest/contestant/{cotestant}-{slug}', 'HomeController@singleContest')->name('single-contest');
 Route::post('/vote', 'PaymentController@vote')->name('vote');
 
 
@@ -27,8 +27,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     // CONTEST
     Route::get('/create/contest', 'ContestController@create')->name('create-contest');
-    Route::get('/edit/contest/{id}', 'ContestController@edit')->name('edit-contest');
-    Route::get('/edit/contest/contestants/{id}', 'ContestController@show')->name('show-contest');
+    Route::get('/edit/contest/{contest}-{slug}', 'ContestController@edit')->name('edit-contest');
+    Route::get('/dashboard/single-contest/{contest}-{slug}', 'ContestController@show')->name('show-contest');
     Route::post('/add/contest', 'ContestController@store')->name('add-contest');
     Route::post('/update/contest/{id}', 'ContestController@update')->name('update-contest');
     Route::get('/delete/contest/{id}', 'ContestController@destroy')->name('delete-contest');
