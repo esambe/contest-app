@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Contestant;
 use Illuminate\Http\Request;
 use App\Vote;
-use Escarter\Openapimomo\OpenapiMoMo;
-use App\Custom\Monetbil;
+
+
+use Bmatovu\MtnMomo\Exceptions\CollectionRequestException;
+use Bmatovu\MtnMomo\Products\Collection;
 
 class PaymentController extends Controller
 {
@@ -14,57 +16,35 @@ class PaymentController extends Controller
 
     public function vote(Request $request)
     {
-
         if($request->payment_method == 'mtn') {
 
                 $request->validate([
                     'number' => 'required'
                 ]);
 
-                // $payment = new Monetbil();
+                try {
+                    $collection = new Collection();
+                    $momoTransactionId = $collection->transact('transactionId', $request->number, 1);
 
-                // $payment->setAmount(200);
-                // $payment->setPhoneNumber($request->number);
-                // $payment->setPaymentId('');
-                // $payment->setPaymentRef('');
-                // $payment->placePayment();
+                    if($momoTransactionId) {
+                        $vote = new Vote;
+                        $count = Vote::where('contestant_id', $request->contestant_id)->latest()->value('vote_count');
 
-                /** Note: when a request is made to the requesttopay endpoint its default status on success is 'PENDING' (waiting for user confirmation)
-                 * so you might want to write some logic that waits for user's confirmation before you proceed or peform this in the background depending on your application logic.
-                 * below is the sample code i use since i need to confirm payment before proceeding to next step in my application(this has it's drawbacks) :(
-                 *
-                 *    while($current_trans_status == 'PENDING'){
-                 *          $init_trans_status = $momoapi->getCollectionTransactionStatus($trans_id);
-                 *          $current_trans_status = $init_trans_status['status'];
-                 *     }
-                */
-                // while($current_trans_status == 'PENDING'){
+                        $contestant = Contestant::where('id', $request->contestant_id)->value('name');
+                        // persist some data in your application
+                        $vote->contest_id = $request->contest_id;
+                        $vote->contestant_id = $request->contestant_id;
+                        $vote->vote_count = $count + 1;
+                        $vote->save();
+                        return back()->with('success', 'Payment successfully and voted successfully for '. $contestant);
+                    }
 
-                //     $init_trans_status = $momoapi->getCollectionTransactionStatus($trans_id);
-                //     $current_trans_status = $init_trans_status['status'];
-                // }
-
-                $vote = new Vote;
-
-                    $count = Vote::where('contestant_id', $request->contestant_id)->latest()->value('vote_count');
-
-                    $contestant = Contestant::where('id', $request->contestant_id)->value('name');
-                    // persist some data in your application
-                    $vote->contest_id = $request->contest_id;
-                    $vote->contestant_id = $request->contestant_id;
-                    $vote->vote_count = $count + 1;
-                    $vote->save();
-
-                return back()->with('success', 'Payment successfully and voted successfully for '. $contestant);
-
-                // if($current_trans_status == "SUCCESSFUL") {
-
-
-                // } else{
-                //     // persist some data in your application
-                //     // return 'to some view with error message!';
-                //     return back()->with('danger', 'Cannot vote. Payment failed');
-                // }
+                } catch(CollectionRequestException $e) {
+                    do {
+                        printf("\n\r%s:%d %s (%d) [%s]\n\r",
+                            $e->getFile(), $e->getLine(), $e->getMessage(), $e->getCode(), get_class($e));
+                    } while($e = $e->getPrevious());
+                }
         }
 
         if($request->payment_method == 'orange') {

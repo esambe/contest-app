@@ -25,4 +25,8 @@ class Contest extends Model
     public function showPath() {
         return url("/dashboard/single-contest/{$this->id}-" . Str::slug($this->name));
     }
+
+    public function singlePath() {
+        return url("/contest/contestant/{$this->id}-". Str::slug($this->name));
+    }
 }

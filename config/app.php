@@ -166,6 +166,8 @@ return [
 
         'Intervention\Image\ImageServiceProvider',
 
+        Bmatovu\MtnMomo\MtnMomoServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
