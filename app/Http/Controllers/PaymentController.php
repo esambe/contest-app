@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Contestant;
+use App\Custom\MomoMtn;
 use Illuminate\Http\Request;
 use App\Vote;
-use Escarter\Openapimomo\OpenapiMoMo;
-use App\Custom\Monetbil;
+
+
+// use Bmatovu\MtnMomo\Exceptions\CollectionRequestException;
+// use Bmatovu\MtnMomo\Products\Collection;
+
 
 class PaymentController extends Controller
 {
@@ -14,57 +18,37 @@ class PaymentController extends Controller
 
     public function vote(Request $request)
     {
-
         if($request->payment_method == 'mtn') {
+            $country_code = '237';
+            $collection = new MomoMtn();
+            $momoTransactionid = $collection->requestToPay($country_code .'681114379', '1', 'Payment for Vote', 'Payment for vote');
 
-                $request->validate([
-                    'number' => 'required'
-                ]);
+            // dd($momoTransactionid);
 
-                // $payment = new Monetbil();
+            $init_trans_status = $collection->getCollectionTransactionStatus($momoTransactionid);
+            $current_trans_status = $init_trans_status['status'];
 
-                // $payment->setAmount(200);
-                // $payment->setPhoneNumber($request->number);
-                // $payment->setPaymentId('');
-                // $payment->setPaymentRef('');
-                // $payment->placePayment();
+            while($current_trans_status == 'PENDING'){
+                $init_trans_status = $collection->getCollectionTransactionStatus($momoTransactionid);
+                $current_trans_status = $init_trans_status['status'];
+            }
 
-                /** Note: when a request is made to the requesttopay endpoint its default status on success is 'PENDING' (waiting for user confirmation)
-                 * so you might want to write some logic that waits for user's confirmation before you proceed or peform this in the background depending on your application logic.
-                 * below is the sample code i use since i need to confirm payment before proceeding to next step in my application(this has it's drawbacks) :(
-                 *
-                 *    while($current_trans_status == 'PENDING'){
-                 *          $init_trans_status = $momoapi->getCollectionTransactionStatus($trans_id);
-                 *          $current_trans_status = $init_trans_status['status'];
-                 *     }
-                */
-                // while($current_trans_status == 'PENDING'){
-
-                //     $init_trans_status = $momoapi->getCollectionTransactionStatus($trans_id);
-                //     $current_trans_status = $init_trans_status['status'];
-                // }
+            if($current_trans_status == "SUCCESSFUL") {
 
                 $vote = new Vote;
+                $count = Vote::where('contestant_id', $request->contestant_id)->latest()->value('vote_count');
 
-                    $count = Vote::where('contestant_id', $request->contestant_id)->latest()->value('vote_count');
-
-                    $contestant = Contestant::where('id', $request->contestant_id)->value('name');
-                    // persist some data in your application
-                    $vote->contest_id = $request->contest_id;
-                    $vote->contestant_id = $request->contestant_id;
-                    $vote->vote_count = $count + 1;
-                    $vote->save();
-
+                $contestant = Contestant::where('id', $request->contestant_id)->value('name');
+                // persist some data in your application
+                $vote->contest_id = $request->contest_id;
+                $vote->contestant_id = $request->contestant_id;
+                $vote->vote_count = $count + 1;
+                $vote->save();
                 return back()->with('success', 'Payment successfully and voted successfully for '. $contestant);
 
-                // if($current_trans_status == "SUCCESSFUL") {
-
-
-                // } else{
-                //     // persist some data in your application
-                //     // return 'to some view with error message!';
-                //     return back()->with('danger', 'Cannot vote. Payment failed');
-                // }
+            } else {
+                return back()->with('danger', 'Payment unsuccessful');
+            }
         }
 
         if($request->payment_method == 'orange') {

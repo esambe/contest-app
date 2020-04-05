@@ -135,7 +135,6 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="" method="get" data-monetbil="form"><button class="" type="submit">Pay by Mobile Money</button></form>
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="mtn-tab" data-toggle="tab" href="#mtn{{ $contestant->id }}" role="tab" aria-controls="mtn" aria-selected="true">MTN</a>
@@ -146,16 +145,18 @@
                                 </ul>
                                 <div class="tab-content bd bd-gray-300 bd-t-0 pd-20" id="myTabContent">
                                     <div class="tab-pane fade show active" id="mtn{{ $contestant->id }}" role="tabpanel" aria-labelledby="mtn-tab">
-                                        <form action="{{ route('vote') }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="contest_id" value="{{ $contest->id}}">
-                                            <input type="hidden" name="contestant_id" value="{{ $contestant->id}}">
-                                            <input type="hidden" name="payment_method" value="mtn">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control phone-inputs" placeholder="Enter MTN MoMo number" name="number">
-                                            </div>
-                                            <button class="btn btn-cancel btn-block">PROCEED</button>
-                                        </form>
+                                        <div>
+                                            <form action="{{ route('vote') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="contest_id" value="{{ $contest->id}}">
+                                                <input type="hidden" name="contestant_id" value="{{ $contestant->id}}">
+                                                <input type="hidden" name="payment_method" value="mtn">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control phone-inputs" placeholder="Enter MTN MoMo number" name="number">
+                                                </div>
+                                                <button class="btn btn-cancel btn-block">PROCEED</button>
+                                            </form>
+                                        </div>
                                     </div>
                                     <div class="tab-pane fade" id="orange{{ $contestant->id }}" role="tabpanel" aria-labelledby="orange-tab">
                                         <form action="{{ route('vote') }}" method="post" >

@@ -4,8 +4,141 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75b356a1710805880a3c18955650688e",
+    "content-hash": "5d80d979e004f9c8dabfe6175365b4f9",
     "packages": [
+        {
+            "name": "bmatovu/laravel-mtn-momo",
+            "version": "v2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mtvbrianking/laravel-mtn-momo.git",
+                "reference": "8e23d20f8905fb3009ad67061387179ac1c23e32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mtvbrianking/laravel-mtn-momo/zipball/8e23d20f8905fb3009ad67061387179ac1c23e32",
+                "reference": "8e23d20f8905fb3009ad67061387179ac1c23e32",
+                "shasum": ""
+            },
+            "require": {
+                "bmatovu/oauth-negotiator": "~1.0.0",
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^6.3",
+                "illuminate/console": "^6.0",
+                "illuminate/container": "^6.0",
+                "illuminate/contracts": "^6.0",
+                "illuminate/database": "^6.0",
+                "illuminate/support": "^6.0",
+                "nesbot/carbon": "^2.0",
+                "php": ">=7.2",
+                "ramsey/uuid": "^3.7"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2.3",
+                "orchestra/testbench": "^4.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "suggest": {
+                "monolog/monolog": "For more comprehensive logging."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bmatovu\\MtnMomo\\MtnMomoServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bmatovu\\MtnMomo\\": "src/"
+                },
+                "files": [
+                    "src/Support/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Matovu",
+                    "email": "mtvbrianking@gmail.com",
+                    "homepage": "http://bmatovu.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel MTN MOMO integration.",
+            "homepage": "https://github.com/mtvbrianking/laravel-mtn-momo",
+            "keywords": [
+                "api",
+                "laravel",
+                "momo",
+                "mtn",
+                "package"
+            ],
+            "time": "2019-12-17T18:33:41+00:00"
+        },
+        {
+            "name": "bmatovu/oauth-negotiator",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mtvbrianking/oauth-negotiator.git",
+                "reference": "12b5f4725d186cf4463a833047d161a0a4130248"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mtvbrianking/oauth-negotiator/zipball/12b5f4725d186cf4463a833047d161a0a4130248",
+                "reference": "12b5f4725d186cf4463a833047d161a0a4130248",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^6.3",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.14",
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~5.0"
+            },
+            "suggest": {
+                "monolog/monolog": "For comprehensive logging."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bmatovu\\OAuthNegotiator\\": "src/"
+                },
+                "files": [
+                    "src/Support/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Matovu",
+                    "email": "mtvbrianking@gmail.com",
+                    "homepage": "http://bmatovu.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "OAuth2 client token manager.",
+            "homepage": "https://github.com/mtvbrianking/oauth-negotiator",
+            "keywords": [
+                "Guzzle",
+                "middleware",
+                "oauth",
+                "oauth2",
+                "package"
+            ],
+            "time": "2019-10-24T14:07:36+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "v0.1.1",

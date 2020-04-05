@@ -81,10 +81,10 @@ class ContestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Contest $contest)
+    public function show(Contest $single)
     {
 
-        $contest = Contest::where('id', '=', $contest->id)->first();
+        $contest = Contest::where('id', '=', $single->id)->first();
 
         $contestants = Contestant::all();
 

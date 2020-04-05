@@ -147,6 +147,7 @@
     <script src="{{ asset('/assets/js/dashforge.settings.js') }}"></script>
 
     <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script>
+    <script src="https://widget.northeurope.cloudapp.azure.com:9443/v0.1.0/mobile-money-widget-mtn.js"></script>
     @yield('scripts')
 
     <script>
