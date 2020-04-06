@@ -130,12 +130,17 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
+                                <img src="{{ asset('assets/imgs/mtn_orange.jpg') }}" alt="mtn-orange" height="50" width="100">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <div>
+                                    <div class="d-flex align-items-center"><span class="tx-18">This operation will request a charge of =</span> <h1 class="text-center">{{ $contest->voter_charge }} XAF</h1></div>
+                                    <p class="text-center tx-16">Continue with:</p>
+                                </div>
+                                <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="mtn-tab" data-toggle="tab" href="#mtn{{ $contestant->id }}" role="tab" aria-controls="mtn" aria-selected="true">MTN</a>
                                     </li>
@@ -151,8 +156,20 @@
                                                 <input type="hidden" name="contest_id" value="{{ $contest->id}}">
                                                 <input type="hidden" name="contestant_id" value="{{ $contestant->id}}">
                                                 <input type="hidden" name="payment_method" value="mtn">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control phone-inputs" placeholder="Enter MTN MoMo number" name="number">
+                                                <div class="input-group mg-b-10">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">+237</span>
+                                                    </div>
+                                                    <input type="text" class="form-control phone-inputs" placeholder="Enter MTN MoMo number" name="number"
+                                                    onkeypress="
+                                                        if(event.which &lt; 48 || event.which &gt; 57 )
+                                                        if(event.which != 8) return false;
+                                                        if(event.which === 32) return false;
+
+                                                    "
+                                                    autocomplete="off"
+                                                    max="9"
+                                                    >
                                                 </div>
                                                 <button class="btn btn-cancel btn-block">PROCEED</button>
                                             </form>
@@ -165,7 +182,21 @@
                                             <input type="hidden" name="contestant_id" value="{{ $contestant->id}}">
                                             <input type="hidden" name="payment_method" value="orange">
                                             <div class="form-group">
-                                                <input type="text" class="form-control phone-inputs" placeholder="Enter Orange MoMo number" name="number">
+                                                <div class="input-group mg-b-10">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">+237</span>
+                                                    </div>
+                                                    <input type="text" class="form-control phone-inputs" placeholder="Enter Orange MoMo number" name="number"
+                                                    onkeypress="
+                                                        if(event.which &lt; 48 || event.which &gt; 57 )
+                                                        if(event.which != 8) return false;
+                                                        if(event.which === 32) return false;
+
+                                                    "
+                                                    autocomplete="off"
+                                                    max="9"
+                                                    >
+                                                </div>
                                             </div>
                                             <button class="btn btn-cancel btn-block">PROCEED</button>
                                         </form>

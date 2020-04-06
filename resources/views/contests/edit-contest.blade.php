@@ -37,14 +37,34 @@
                     <input type="file" name="img" class="upload-input" id="file-picker">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="name">CONTEST NAME</label>
-                <input type="text" name="name" class="form-control phone-inputs @error('name') is-invalid @enderror" value="{{ $contest->name }}" placeholder="Contest name">
-                @error('name')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="name">CONTEST NAME</label>
+                    <input type="text" name="name" class="form-control phone-inputs @error('name') is-invalid @enderror" value="{{ $contest->name }}" placeholder="Contest name">
+                    @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="col-md-6">
+                    <label for="name">VOTER CHARGE</label>
+                    <input type="text" name="voter_charge" class="form-control phone-inputs @error('voter_charge') is-invalid @enderror" value="{{ $contest->voter_charge }}" placeholder="Amount"
+                    autocomplete="off"
+                    onkeypress="
+                        if(event.which &lt; 48 || event.which &gt; 57 )
+                        if(event.which != 8) return false;
+                        if(event.which === 32) return false;
+
+                    "
+                    max="9"
+                    >
+                    @error('voter_charge')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
             </div>
             <div class="form-group">
                 <label for="description">DESCRIPTION</label>

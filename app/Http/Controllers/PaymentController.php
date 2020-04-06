@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contest;
 use App\Contestant;
 use App\Custom\MomoMtn;
 use Illuminate\Http\Request;
@@ -19,11 +20,20 @@ class PaymentController extends Controller
     public function vote(Request $request)
     {
         if($request->payment_method == 'mtn') {
+
+            $request->validate([
+                'number' => 'required|numeric'
+            ]);
+
+            $contest = Contest::where('id', '=', $request->contest_id)->first();
+
+            $voting_charge = $contest->voter_charge;
+            $payer_message = 'VOTE CHARGE FROM E-CONTEST';
+            $payee_note = 'VOTE CHARGE TO PAY';
+
             $country_code = '237';
             $collection = new MomoMtn();
-            $momoTransactionid = $collection->requestToPay($country_code .'681114379', '1', 'Payment for Vote', 'Payment for vote');
-
-            // dd($momoTransactionid);
+            $momoTransactionid = $collection->requestToPay($country_code.$request->number, $voting_charge, $payer_message, $payee_note);
 
             $init_trans_status = $collection->getCollectionTransactionStatus($momoTransactionid);
             $current_trans_status = $init_trans_status['status'];
@@ -31,6 +41,11 @@ class PaymentController extends Controller
             while($current_trans_status == 'PENDING'){
                 $init_trans_status = $collection->getCollectionTransactionStatus($momoTransactionid);
                 $current_trans_status = $init_trans_status['status'];
+
+            }
+
+            if($current_trans_status == "FAILED") {
+                return back()->with('danger', 'Payment Failed. Please try again.');
             }
 
             if($current_trans_status == "SUCCESSFUL") {
