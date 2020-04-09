@@ -41,10 +41,9 @@ class ContestController extends Controller
     {
         $contest = new Contest;
 
-        $slug = $request->name;
-
         $request->validate([
             'name' => 'required|string',
+            'voter_charge' => 'required|numeric',
             'description' => 'required|string',
             'start_date'  => 'required',
             'end_date'  => 'required',
@@ -66,6 +65,7 @@ class ContestController extends Controller
         }
 
         $contest->name = $request->name;
+        $contest->voter_charge = $request->voter_charge;
         $contest->description = $request->description;
         $contest->start_date = $request->start_date;
         $contest->end_date = $request->end_date;
@@ -119,12 +119,11 @@ class ContestController extends Controller
 
         $request->validate([
             'name' => 'required|string',
+            'voter_charge' => 'required|numeric',
             'description' => 'required|string',
             'start_date'  => 'required',
             'end_date'  => 'required'
         ]);
-
-
 
         if($request->file('img')) {
             // Processing Image
@@ -141,6 +140,7 @@ class ContestController extends Controller
         }
 
         $contest->name = $request->name;
+        $contest->voter_charge = $request->voter_charge;
         $contest->description = $request->description;
         $contest->start_date = $request->start_date;
         $contest->end_date = $request->end_date;
