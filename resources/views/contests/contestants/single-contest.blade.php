@@ -137,7 +137,7 @@
                             </div>
                             <div class="modal-body">
                                 <div>
-                                    <div class="d-flex align-items-center"><span class="tx-18">This operation will request a charge of =</span> <h1 class="text-center">{{ $contest->voter_charge }} XAF</h1></div>
+                                    <div class="text-center"><span class="tx-20">This operation will request a charge of </span> <h1 class="text-center">{{ $contest->voter_charge }} FCFA</h1></div>
                                     <p class="text-center tx-16">Continue with:</p>
                                 </div>
                                 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
@@ -176,28 +176,11 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="orange{{ $contestant->id }}" role="tabpanel" aria-labelledby="orange-tab">
-                                        <form action="{{ route('vote') }}" method="post" >
+                                        <form action="{{ route('vote') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="contest_id" value="{{ $contest->id}}">
                                             <input type="hidden" name="contestant_id" value="{{ $contestant->id}}">
                                             <input type="hidden" name="payment_method" value="orange">
-                                            <div class="form-group">
-                                                <div class="input-group mg-b-10">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1">+237</span>
-                                                    </div>
-                                                    <input type="text" class="form-control phone-inputs" placeholder="Enter Orange MoMo number" name="number"
-                                                    onkeypress="
-                                                        if(event.which &lt; 48 || event.which &gt; 57 )
-                                                        if(event.which != 8) return false;
-                                                        if(event.which === 32) return false;
-
-                                                    "
-                                                    autocomplete="off"
-                                                    max="9"
-                                                    >
-                                                </div>
-                                            </div>
                                             <button class="btn btn-cancel btn-block">PROCEED</button>
                                         </form>
                                     </div>

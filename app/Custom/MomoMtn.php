@@ -15,14 +15,14 @@ class MomoMtn
     // const API_ENV       = 'mtncameroon';
 
     // The below parameters are for live user with MTN momo
-    private $user_id = "efa1ae8d-7226-4eda-9be7-8cb74a1e2279"; // can be changed for different user
-    private $api_key = "e933cfa2a22b4302abf246f3487465f7"; // Can be chnaged for different user
-    private $token_url = "https://ericssonbasicapi1.azure-api.net/collection/token/";
-    private $ocp_collection_sub_key  = "d5ea6daf31b14c0ab2d230e1c94291f4"; // Can be changed for different user
-    private $api_env    = "mtncameroon";
-    private $host_url   = 'https://ericssonbasicapi1.azure-api.net';
-    private $party_id_type = 'MSISDN';
-    private $currency   = 'XAF';
+    private $user_id                    = "efa1ae8d-7226-4eda-9be7-8cb74a1e2279"; // can be changed for different user
+    private $api_key                    = "e933cfa2a22b4302abf246f3487465f7"; // Can be chnaged for different user
+    private $token_url                  = "https://ericssonbasicapi1.azure-api.net/collection/token/";
+    private $ocp_collection_sub_key     = "d5ea6daf31b14c0ab2d230e1c94291f4"; // Can be changed for different user
+    private $api_env                    = "mtncameroon";
+    private $host_url                   = 'https://ericssonbasicapi1.azure-api.net';
+    private $party_id_type              = 'MSISDN';
+    private $currency                   = 'XAF';
 
     // TODO
     // Call this values from .env file so user can set once
