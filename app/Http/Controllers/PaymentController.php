@@ -74,7 +74,7 @@ class PaymentController extends Controller
             $voting_charge = $contest->voter_charge;
 
             $collection = new MomoOrange();
-            $transaction = $collection->requestToPay($voting_charge);
+            $transaction = $collection->requestToPay($voting_charge, $contest->id, $contest->name);
 
             //dd($transaction);
 

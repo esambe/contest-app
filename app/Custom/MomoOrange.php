@@ -65,7 +65,11 @@ class MomoOrange
         return $redir_url;
     }
 
-    public function requestToPay($amount) {
+    function slugify($string){
+        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
+    }
+
+    public function requestToPay($amount, $contest_id, $title) {
 
         $amount = ceil((int)$amount). '';
         $merchantKey = $this->merchantKey;
@@ -76,12 +80,12 @@ class MomoOrange
             'currency' => 'XAF',
             'order_id' => $order_id . '-' . time(),
             'amount' => '' . $amount,
-            'return_url' => 'https://google.com',
+            'return_url' => 'http://votes.marketplaz.com/public/contest/contestant/'. $contest_id . '-'. $this->slugify($title),
             // 'return_url' => $this->get_return_url($order),
             //'return_url' => wc_get_checkout_url() . '?order_id=' . $order_id,
-            'cancel_url' => 'https://google.com',
+            'cancel_url' => 'http://votes.marketplaz.com/public/contest/contestant/'. $contest_id . '-'. $this->slugify($title),
             // 'notif_url' => get_site_url() . '/wp-json/dm/notif_url',
-            'notif_url' => 'https://google.com',
+            'notif_url' => 'http://votes.marketplaz.com/public/contest/contestant/' . $contest_id . '-'. $this->slugify($title),
             'lang' => 'en',
             'reference' => 'Vote App',
         ]);
@@ -108,32 +112,32 @@ class MomoOrange
     }
 
     // Processes payments
-    public function process_payment($order_id, $amount)
-    {
-        // Retrieve access token
-        $access_token = $this->get_token();
+    // public function process_payment($order_id, $amount)
+    // {
+    //     // Retrieve access token
+    //     $access_token = $this->get_token();
 
-        if ( !empty( $access_token ) ) {
+    //     if ( !empty( $access_token ) ) {
 
-            // $merchantKey = $this->merchantKey;
+    //         // $merchantKey = $this->merchantKey;
 
-            $payment_request = $this->requestToPay($amount);
+    //         $payment_request = $this->requestToPay($amount);
 
-            if ($payment_request->status == 201) {
-                return array(
-                    'result' => 'success',
-                    'redirect' => $payment_request->payment_url
-                );
-            } else {
-                return back()->with('danger', 'Sorry, we were unable to initiate transaction. Please try again.');
-            }
-        } else {
-            return back()->with('danger', '');
-        }
+    //         if ($payment_request->status == 201) {
+    //             return array(
+    //                 'result' => 'success',
+    //                 'redirect' => $payment_request->payment_url
+    //             );
+    //         } else {
+    //             return back()->with('danger', 'Sorry, we were unable to initiate transaction. Please try again.');
+    //         }
+    //     } else {
+    //         return back()->with('danger', '');
+    //     }
 
-        return array(
-            'result' => 'danger'
-        );
-    }
+    //     return array(
+    //         'result' => 'danger'
+    //     );
+    // }
 }
 
