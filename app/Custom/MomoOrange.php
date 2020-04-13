@@ -82,7 +82,7 @@ class MomoOrange
         $body = json_encode([
             'merchant_key' => $merchantKey,
             'currency' => 'XAF',
-            'order_id' => $order_id . '-' . time(),
+            'order_id' => $order_id . '-'. $contest_id,
             'amount' => '' . $amount,
             'return_url' =>  $this->app_host. '/contest/contestant/'. $contest_id . '-'. $this->slugify($title),
             // 'return_url' => $this->get_return_url($order),
@@ -155,28 +155,28 @@ class MomoOrange
     public function checkTransactionStatus($order_id, $amount, $pay_token)
     {
 
-        $body = [
+        $body = json_encode([
             "order_id"  => $order_id,
-            "amount"    => $amount,
+            "amount"    => intval($amount),
             "pay_token" => $pay_token
-        ];
+        ]);
 
-        $body = json_encode($body);
 
-        $clientID = $this->clientID;
-        $clientSecret = $this->clientSecret;
-        $auth = $clientID . ':' . $clientSecret;
-
-        $options = [
+        $client = new Client();
+        $response = $client->request('POST',
+            $this->host .'/orange-money-webpay/cm/v1/transactionstatus', [
             'headers' => [
-                'Authorization' => 'Bearer ' . base64_encode($auth),
                 'Accept'        => 'application/json',
+                'Authorization' => 'Bearer ' . $this->get_token(),
                 'Content-Type'  => 'application/json'
             ],
             'body' => $body
-        ];
-        $client = new Client();
-        return  $client->request('POST', $this->host .'orange-money-webpay/dev/v1/transactionstatus', $options);
+        ]);
+
+        return json_decode($response->getBody()->getContents());
+
+        // return $response;
+        // return json_decode($response->getBody()->getContents());
     }
 
 }

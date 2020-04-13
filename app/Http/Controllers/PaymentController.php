@@ -79,6 +79,8 @@ class PaymentController extends Controller
 
         }
 
+
+
         if($request->payment_method == 'orange') {
 
             $contest = Contest::where('id', '=', $request->contest_id)->first();
@@ -145,31 +147,32 @@ class PaymentController extends Controller
 
     }
 
-    public function orange_notif() {
+
+    public function orange_notif(Request $request) {
 
         $transaction = OrangeMomoTransaction::latest()->first();
         $contest = Contest::where('id', '=', $transaction->contest_id)->first();
         $voting_charge = $contest->voter_charge;
         $collection = new MomoOrange();
 
-        $check = $collection->checkTransactionStatus('voter', $voting_charge, $transaction->pay_token);
+        $check = $collection->checkTransactionStatus('voter-'. $transaction->contest_id, $voting_charge, $transaction->pay_token);
 
-        if($check->statue == 'SUCCESS') {
+        dd($check);
+
+        if($check->status == 'SUCCESS') {
             $vote = new Vote;
             $count = Vote::where('contestant_id', $transaction->contestant_id)->latest()->value('vote_count');
-
             $contestant = Contestant::where('id', $transaction->contestant_id)->value('name');
             // persist some data in your application
             $vote->contest_id = $transaction->contest_id;
             $vote->contestant_id = $transaction->contestant_id;
             $vote->vote_count = $count + 1;
             $vote->save();
-
             return back()->with('success', 'Payment successfully and voted successfully for '. $contestant);
-        } else {
-            return back()->with('danger', 'Something went wrong');
-        }
 
-        dd($check);
+        } else if ($check->status == 'FAILED') {
+
+        }
     }
+
 }
