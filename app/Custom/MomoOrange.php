@@ -65,24 +65,24 @@ class MomoOrange
         }
     } // end get_token
 
-    public function getReturnUrl($redir_url) {
-        return $redir_url;
-    }
-
     function slugify($string){
         return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
     }
 
-    public function requestToPay($amount, $contest_id, $title) {
+    function getOrderId($id) {
+        return $id . '-'.time();
+    }
+
+    public function requestToPay($amount, $contest_id, $title, $order_id) {
 
         $amount = ceil((int)$amount). '';
         $merchantKey = $this->merchantKey;
-        $order_id = 'voter';
+        $order_id = $order_id;
 
         $body = json_encode([
             'merchant_key' => $merchantKey,
             'currency' => 'XAF',
-            'order_id' => $order_id . '-'. $contest_id,
+            'order_id' => $order_id,
             'amount' => '' . $amount,
             'return_url' =>  $this->app_host. '/contest/contestant/'. $contest_id . '-'. $this->slugify($title),
             // 'return_url' => $this->get_return_url($order),
@@ -122,10 +122,11 @@ class MomoOrange
         $access_token = $this->get_token();
 
         if ( !empty( $access_token ) ) {
-
             // $merchantKey = $this->merchantKey;
+            $order_id = $this->getOrderId('vote');
+            $payment_request = $this->requestToPay($amount, $contest_id, $title, $order_id);
 
-            $payment_request = $this->requestToPay($amount, $contest_id, $title);
+            // dd($payment_request);
 
 
             if ($payment_request->status == 201) {
@@ -133,7 +134,8 @@ class MomoOrange
                     'result' => 'success',
                     'pay_token' => $payment_request->pay_token,
                     'notif_token' => $payment_request->notif_token,
-                    'redirect' => $payment_request->payment_url
+                    'redirect' => $payment_request->payment_url,
+                    'order_id' => $order_id
                 ];
             } else {
                 return [

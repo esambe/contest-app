@@ -9,7 +9,7 @@ use App\Custom\MomoOrange;
 use App\OrangeMomoTransaction;
 use Illuminate\Http\Request;
 use App\Vote;
-
+use Illuminate\Support\Facades\Auth;
 
 // use Bmatovu\MtnMomo\Exceptions\CollectionRequestException;
 // use Bmatovu\MtnMomo\Products\Collection;
@@ -99,36 +99,24 @@ class PaymentController extends Controller
             $pay_token = $transaction['pay_token'];
             $notif_token = $transaction['notif_token'];
             $redir_url = $transaction['redirect'];
+            $order_id  = $transaction['order_id'];
+
+            // dd($order_id);
 
 
             if( $result == 'success' ) {
+
                 $temp_save = new OrangeMomoTransaction;
                 // To be saved in db
-                // $pay_token = $transaction->pay_token;
-                // $notif_token = $transaction->notif_token;
-                $contest_id  = $request->contest_id;
-                $contestant_id = $request->contestant_id;
-
-                $temp_save->pay_token = $pay_token;
-                $temp_save->notif_token = $notif_token;
-                $temp_save->contest_id  = $contest_id;
-                $temp_save->contestant_id = $contestant_id;
+                $contest_id                 = $request->contest_id;
+                $contestant_id              = $request->contestant_id;
+                $temp_save->pay_token       = $pay_token;
+                $temp_save->notif_token     = $notif_token;
+                $temp_save->contest_id      = $contest_id;
+                $temp_save->contestant_id   = $contestant_id;
+                $temp_save->user_id         = $request->user_id;
+                $temp_save->order_id        = $order_id;
                 $temp_save->save();
-
-                // if($redir_url) {
-
-                //     $vote = new Vote;
-                //     $count = Vote::where('contestant_id', $request->contestant_id)->latest()->value('vote_count');
-
-                //     $contestant = Contestant::where('id', $request->contestant_id)->value('name');
-                //     // persist some data in your application
-                //     $vote->contest_id = $request->contest_id;
-                //     $vote->contestant_id = $request->contestant_id;
-                //     $vote->vote_count = $count + 1;
-                //     $vote->save();
-                //     //return back()->with('success', 'Payment successfully and voted successfully for '. $contestant);
-                // }
-
                 return redirect($redir_url);
             }
 
@@ -141,25 +129,29 @@ class PaymentController extends Controller
             if($result == 'danger'){
                 return back()->with('danger', 'An unexpected error occured. Please try again later');
             }
-
             return back()->with('danger', 'Cannot vote. Payment method not ready for use. Please try another');
         }
 
     }
 
 
-    public function orange_notif(Request $request) {
+    public function orange_notif() {
 
-        $transaction = OrangeMomoTransaction::latest()->first();
+        $transaction = OrangeMomoTransaction::where('user_id', '=', Auth::user()->id)
+            ->latest()
+            ->first();
+
+        // dd($transaction->pay_token);
+
         $contest = Contest::where('id', '=', $transaction->contest_id)->first();
         $voting_charge = $contest->voter_charge;
         $collection = new MomoOrange();
 
-        $check = $collection->checkTransactionStatus('voter-'. $transaction->contest_id, $voting_charge, $transaction->pay_token);
+        $check = $collection->checkTransactionStatus($transaction->order_id, $voting_charge, $transaction->pay_token);
 
-        dd($check);
-
-        if($check->status == 'SUCCESS') {
+        // dd($check);
+        if($check->status == 'SUCCESS')
+        {
             $vote = new Vote;
             $count = Vote::where('contestant_id', $transaction->contestant_id)->latest()->value('vote_count');
             $contestant = Contestant::where('id', $transaction->contestant_id)->value('name');
@@ -168,10 +160,11 @@ class PaymentController extends Controller
             $vote->contestant_id = $transaction->contestant_id;
             $vote->vote_count = $count + 1;
             $vote->save();
-            return back()->with('success', 'Payment successfully and voted successfully for '. $contestant);
-
-        } else if ($check->status == 'FAILED') {
-
+            return back()->with('success', 'Payment successfully and voted successfully for '. $contestant->name);
+        }
+        else if ($check->status == 'FAILED')
+        {
+            return back()->with('danger', 'Payment failed');
         }
     }
 

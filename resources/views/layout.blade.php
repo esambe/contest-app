@@ -78,10 +78,12 @@
 
             @else
                 <div class="admin-bar">
+                    @role('super-admin')
                     <a class="user-style" href="{{ url('/dashboard') }}">
                         <i class="fa fa-th-large text-white"></i>
                         {{ __('Dasboard') }}
                     </a> /
+                    @endrole
                     <a class="user-style" href="#">
                         <i class="fa fa-user text-white"></i>
                         {{ Auth::user()->name }}

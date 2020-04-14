@@ -13,7 +13,7 @@
 
 
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
@@ -22,8 +22,7 @@ Route::post('/vote', 'PaymentController@vote')->name('vote');
 Route::get('/orange-callback', 'PaymentController@orange_notif');
 
 
-Route::group(['middleware' => ['auth']], function () {
-
+Route::group(['middleware' => ['auth', 'role:super-admin']], function () {
     Route::get('/dashboard', 'ContestController@index')->name('dashboard');
 
     // CONTEST
