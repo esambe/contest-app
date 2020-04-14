@@ -145,6 +145,7 @@ class PaymentController extends Controller
         // dd($transaction->pay_token);
 
         $contest = Contest::where('id', '=', $transaction->contest_id)->first();
+        // dd($contest->name);
         $voting_charge = $contest->voter_charge;
         $collection = new MomoOrange();
 
@@ -153,6 +154,7 @@ class PaymentController extends Controller
         // dd($check);
         if($check->status == 'SUCCESS')
         {
+
             $vote = new Vote;
             $count = Vote::where('contestant_id', $transaction->contestant_id)->latest()->value('vote_count');
             $contestant = Contestant::where('id', $transaction->contestant_id)->value('name');
@@ -161,11 +163,12 @@ class PaymentController extends Controller
             $vote->contestant_id = $transaction->contestant_id;
             $vote->vote_count = $count + 1;
             $vote->save();
-            return redirect('/contest/contestant/'.$contest->id.'-'.Str::slug($contest->name))->with('success', 'Payment successfully and voted successfully for '. $contestant->name);
+            // dd($_contest->name);
+            return redirect('/contest/contestant/'.$contest->id.'-'.Str::slug($contest['name']))->with('success', 'Payment successfully and voted successfully for '. $contestant);
         }
         else if ($check->status == 'FAILED')
         {
-            return back()->with('danger', 'Payment failed');
+            return redirect('/contest/contestant/'.$contest->id.'-'.Str::slug($contest->name))->with('danger', 'Payment failed');
         }
     }
 
