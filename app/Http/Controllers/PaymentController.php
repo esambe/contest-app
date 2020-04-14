@@ -10,6 +10,7 @@ use App\OrangeMomoTransaction;
 use Illuminate\Http\Request;
 use App\Vote;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 // use Bmatovu\MtnMomo\Exceptions\CollectionRequestException;
 // use Bmatovu\MtnMomo\Products\Collection;
@@ -160,7 +161,7 @@ class PaymentController extends Controller
             $vote->contestant_id = $transaction->contestant_id;
             $vote->vote_count = $count + 1;
             $vote->save();
-            return back()->with('success', 'Payment successfully and voted successfully for '. $contestant->name);
+            return redirect('/contest/contestant/'.$contest->id.'-'.Str::slug($contest->name))->with('success', 'Payment successfully and voted successfully for '. $contestant->name);
         }
         else if ($check->status == 'FAILED')
         {
