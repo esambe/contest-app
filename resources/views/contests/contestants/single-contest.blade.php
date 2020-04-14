@@ -232,14 +232,14 @@
                                     <div class="modal-body">
                                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Signin</a>
+                                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home{{ $contestant->id  }}" role="tab" aria-controls="pills-home" aria-selected="true">Signin</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Signup</a>
+                                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile{{ $contestant->id  }}" role="tab" aria-controls="pills-profile" aria-selected="false">Signup</a>
                                             </li>
                                         </ul>
-                                        <div class="tab-content" id="pills-tabContent">
-                                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                        <div class="tab-content" id="pills-tabContent{{ $contestant->id  }}">
+                                            <div class="tab-pane fade show active" id="pills-home{{ $contestant->id  }}" role="tabpanel" aria-labelledby="pills-home-tab">
                                                 <span> Already have an account here ? </span>
                                                 <form method="POST" action="{{ route('login') }}">
                                                     @csrf
@@ -283,7 +283,7 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                            <div class="tab-pane fade" id="pills-profile{{ $contestant->id  }}" role="tabpanel" aria-labelledby="pills-profile-tab">
                                                 <form method="POST" action="{{ route('register') }}">
                                                     @csrf
                                                     <div class="form-group row">
