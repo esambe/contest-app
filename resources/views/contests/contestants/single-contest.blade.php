@@ -30,7 +30,9 @@
                     <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i>{{ __(' Home') }}</a></li>
                     @guest
                         @else
+                        @role('super-admin')
                         <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('dashboard') }}"><i class="fa fa-th-large"></i>{{ __(' Dashboard') }}</a></li>
+                        @endrole
                     @endguest
                     <li class="breadcrumb-item active" aria-current="page">{{ $contest->name }}</li>
                 </ol>
@@ -176,13 +178,18 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="orange{{ $contestant->id }}" role="tabpanel" aria-labelledby="orange-tab">
-                                        <form action="{{ route('vote') }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="contest_id" value="{{ $contest->id}}">
-                                            <input type="hidden" name="contestant_id" value="{{ $contestant->id}}">
-                                            <input type="hidden" name="payment_method" value="orange">
-                                            <button class="btn btn-cancel btn-block">PROCEED</button>
-                                        </form>
+                                        @guest
+                                            <a class="btn btn-cancel btn-block" href="#register{{ $contestant->id }}" data-toggle="modal">{{ __('Get started') }}</a>
+                                            @else
+                                            <form action="{{ route('vote') }}" method="post" >
+                                                @csrf
+                                                <input type="hidden" name="contest_id" value="{{ $contest->id}}">
+                                                <input type="hidden" name="contestant_id" value="{{ $contestant->id}}">
+                                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                                <input type="hidden" name="payment_method" value="orange">
+                                                <button class="btn btn-cancel btn-block">PROCEED</button>
+                                            </form>
+                                        @endguest
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +197,7 @@
                     </div>
                 </div>
                 <!-- Modal to view more detail -->
-                <div class="modal fade" id="detail{{ $contestant->id }}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="paymentTitle" aria-hidden="true">
+                    <div class="modal fade" id="detail{{ $contestant->id }}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="paymentTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -212,6 +219,138 @@
                             </div>
                         </div>
                     </div>
+                    @guest
+                        <div class="modal fade" id="register{{ $contestant->id }}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="paymentTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3></h3>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Signin</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Signup</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                                <span> Already have an account here ? </span>
+                                                <form method="POST" action="{{ route('login') }}">
+                                                    @csrf
+                                                    <div class="form-group row">
+                                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                                        <div class="col-md-6">
+                                                            <input id="email" type="email" class="form-control phone-inputs @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                                            @error('email')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                                        <div class="col-md-6">
+                                                            <input id="password" type="password" class="form-control phone-inputs @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                                            @error('password')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row mb-0">
+                                                        <div class="col-md-8 offset-md-4">
+                                                            <button type="submit" class="btn btn-cancel">
+                                                                {{ __('Sign in') }}
+                                                            </button>
+
+                                                            @if (Route::has('password.request'))
+                                                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                                    {{ __('Forgot Your Password?') }}
+                                                                </a>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                                <form method="POST" action="{{ route('register') }}">
+                                                    @csrf
+                                                    <div class="form-group row">
+                                                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+
+                                                        <div class="col-md-6">
+                                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                                            @error('name')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                                                        <div class="col-md-6">
+                                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                                                            @error('email')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                                                        <div class="col-md-6">
+                                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                                            @error('password')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                                                        <div class="col-md-6">
+                                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row mb-0">
+                                                        <div class="col-md-6 offset-md-4">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                {{ __('Set account') }}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endguest
             </div>
         </div>
     @endforeach

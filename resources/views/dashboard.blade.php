@@ -6,13 +6,17 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mg-b-0">
                 <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i>{{ __(' Home') }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-th-large"></i>{{ __(' Dashboard') }}</li>
+                @role('super-admin')
+                    <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-th-large"></i>{{ __(' Dashboard') }}</li>
+                @endrole
             </ol>
         </nav>
     </div>
-    <div class="d-none d-md-block">
-        <a href="{{ route('create-contest') }}" class="btn btn-cancel">{{ __('ADD COMPETETION') }}</a>
-    </div>
+    @role('super-admin')
+        <div class="d-none d-md-block">
+            <a href="{{ route('create-contest') }}" class="btn btn-cancel">{{ __('ADD COMPETETION') }}</a>
+        </div>
+    @endrole
 </div>
 
 <div data-label="Example" class="row">

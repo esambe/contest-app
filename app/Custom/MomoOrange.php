@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Custom;
+
+use App\OrangeMomoTransaction;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 
@@ -14,6 +16,8 @@ class MomoOrange
     private $clientID = "Ob63oDG9iWA7KeY7XDVLpSXlcDQhV1Un";
     private $clientSecret = "0j12PtBkvHAOAC4O";
     private $merchantKey = "ff0e0c95";
+    private $app_host = 'http://votes.marketplaz.com/public';
+    // private $localhost = 'http://127.0.0.1';
 
 
     // Setup our Gateway's id, description and other values
@@ -61,31 +65,31 @@ class MomoOrange
         }
     } // end get_token
 
-    public function getReturnUrl($redir_url) {
-        return $redir_url;
-    }
-
     function slugify($string){
         return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
     }
 
-    public function requestToPay($amount, $contest_id, $title) {
+    function getOrderId($id) {
+        return $id . '-'.time();
+    }
+
+    public function requestToPay($amount, $contest_id, $title, $order_id) {
 
         $amount = ceil((int)$amount). '';
         $merchantKey = $this->merchantKey;
-        $order_id = 'voter';
+        $order_id = $order_id;
 
         $body = json_encode([
             'merchant_key' => $merchantKey,
             'currency' => 'XAF',
-            'order_id' => $order_id . '-' . time(),
+            'order_id' => $order_id,
             'amount' => '' . $amount,
-            'return_url' => 'http://votes.marketplaz.com/public/contest/contestant/'. $contest_id . '-'. $this->slugify($title),
+            'return_url' =>  $this->app_host. '/contest/contestant/'. $contest_id . '-'. $this->slugify($title),
             // 'return_url' => $this->get_return_url($order),
             //'return_url' => wc_get_checkout_url() . '?order_id=' . $order_id,
-            'cancel_url' => 'http://votes.marketplaz.com/public/contest/contestant/'. $contest_id . '-'. $this->slugify($title),
+            'cancel_url' => $this->app_host . '/contest/contestant/'. $contest_id . '-'. $this->slugify($title),
             // 'notif_url' => get_site_url() . '/wp-json/dm/notif_url',
-            'notif_url' => 'http://votes.marketplaz.com/public/contest/contestant/' . $contest_id . '-'. $this->slugify($title),
+            'notif_url' => $this->app_host .'/orange-callback',
             'lang' => 'en',
             'reference' => 'Vote App',
         ]);
@@ -112,32 +116,70 @@ class MomoOrange
     }
 
     // Processes payments
-    // public function process_payment($order_id, $amount)
-    // {
-    //     // Retrieve access token
-    //     $access_token = $this->get_token();
+    public function process_payment($amount, $contest_id, $title)
+    {
+        // Retrieve access token
+        $access_token = $this->get_token();
 
-    //     if ( !empty( $access_token ) ) {
+        if ( !empty( $access_token ) ) {
+            // $merchantKey = $this->merchantKey;
+            $order_id = $this->getOrderId('vote');
+            $payment_request = $this->requestToPay($amount, $contest_id, $title, $order_id);
 
-    //         // $merchantKey = $this->merchantKey;
+            // dd($payment_request);
 
-    //         $payment_request = $this->requestToPay($amount);
 
-    //         if ($payment_request->status == 201) {
-    //             return array(
-    //                 'result' => 'success',
-    //                 'redirect' => $payment_request->payment_url
-    //             );
-    //         } else {
-    //             return back()->with('danger', 'Sorry, we were unable to initiate transaction. Please try again.');
-    //         }
-    //     } else {
-    //         return back()->with('danger', '');
-    //     }
+            if ($payment_request->status == 201) {
+                return [
+                    'result' => 'success',
+                    'pay_token' => $payment_request->pay_token,
+                    'notif_token' => $payment_request->notif_token,
+                    'redirect' => $payment_request->payment_url,
+                    'order_id' => $order_id
+                ];
+            } else {
+                return [
+                    'result' => 'fail'
+                ];
+            }
+        } else {
+            return [
+                'result' => 'error'
+            ];
+        }
 
-    //     return array(
-    //         'result' => 'danger'
-    //     );
-    // }
+        return array(
+            'result' => 'danger'
+        );
+    }
+
+
+    public function checkTransactionStatus($order_id, $amount, $pay_token)
+    {
+
+        $body = json_encode([
+            "order_id"  => $order_id,
+            "amount"    => intval($amount),
+            "pay_token" => $pay_token
+        ]);
+
+
+        $client = new Client();
+        $response = $client->request('POST',
+            $this->host .'/orange-money-webpay/cm/v1/transactionstatus', [
+            'headers' => [
+                'Accept'        => 'application/json',
+                'Authorization' => 'Bearer ' . $this->get_token(),
+                'Content-Type'  => 'application/json'
+            ],
+            'body' => $body
+        ]);
+
+        return json_decode($response->getBody()->getContents());
+
+        // return $response;
+        // return json_decode($response->getBody()->getContents());
+    }
+
 }
 
