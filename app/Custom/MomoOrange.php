@@ -84,7 +84,7 @@ class MomoOrange
             'currency' => 'XAF',
             'order_id' => $order_id,
             'amount' => '' . $amount,
-            'return_url' =>  $this->app_host. '/contest/contestant/'. $contest_id . '-'. $this->slugify($title),
+            'return_url' =>  $this->app_host.'/orange-callback',
             // 'return_url' => $this->get_return_url($order),
             //'return_url' => wc_get_checkout_url() . '?order_id=' . $order_id,
             'cancel_url' => $this->app_host . '/contest/contestant/'. $contest_id . '-'. $this->slugify($title),
