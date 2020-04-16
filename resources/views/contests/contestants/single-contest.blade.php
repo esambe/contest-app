@@ -87,9 +87,9 @@
                 @foreach ($contestants as $contestant)
                     <div class="pb-3 row">
                         <div class="col-md-4 d-flex align-items-center">
-                            <div class="tx-15 mr-3">
+                            {{-- <div class="tx-15 mr-3">
                                 {{ $contestant->id }}
-                            </div>
+                            </div> --}}
                             <div class="d-flex align-items-center">
                                 <div class="avatar avatar-xs mr-2"><img src="https://www.w3schools.com/howto/img_avatar2.png" class="rounded-circle" alt=""></div>
                                 <span class="secondary-text">{{ $contestant->name }}</span>
