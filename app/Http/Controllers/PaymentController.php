@@ -58,7 +58,7 @@ class PaymentController extends Controller
                 $vote->contestant_id = $request->contestant_id;
                 $vote->vote_count = $count + 1;
                 $vote->save();
-                return back()->with('success', 'Payment successfully and voted successfully for '. $contestant);
+                return back()->with('success', 'Payment successful and voted successfully for '. $contestant);
 
             }
             else if($current_trans_status == "FAILED")
@@ -164,7 +164,7 @@ class PaymentController extends Controller
             $vote->vote_count = $count + 1;
             $vote->save();
             // dd($_contest->name);
-            return redirect('/contest/contestant/'.$contest->id.'-'.Str::slug($contest['name']))->with('success', 'Payment successfully and voted successfully for '. $contestant);
+            return redirect('/contest/contestant/'.$contest->id.'-'.Str::slug($contest['name']))->with('success', 'Payment successful and voted successfully for '. $contestant);
         }
         else if ($check->status == 'FAILED')
         {

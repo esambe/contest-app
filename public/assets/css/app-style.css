@@ -8,7 +8,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    background-size: 100%;
+    /* background-size: 100%; */
 }
 
 
@@ -82,6 +82,7 @@ div.modal-content {
     background-color: #2B7A78;
     color: #fff;
     padding: 10px;
+    margin-bottom: 5px;
 }
 
 .logout-link {
