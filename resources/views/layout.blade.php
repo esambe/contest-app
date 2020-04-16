@@ -59,7 +59,10 @@
         <div class="container">
             <a href="" id="mainMenuOpen" class="burger-menu"><i data-feather="menu"></i></a>
             <div class="navbar-brand">
-            <a href="{{ url('/') }}" class="df-logo logo-text">CONT<span>EST</span></a>
+            <a href="{{ url('/') }}" class="df-logo logo-text">
+                <img src="{{ asset('/assets/imgs/logo.jpg') }}" height="40" alt="votes on marketplaz">
+            </a>
+            {{-- CONT<span>EST</span> --}}
             </div><!-- navbar-brand -->
             <div id="navbarMenu" class="navbar-menu-wrapper">
             <div class="navbar-menu-header">
