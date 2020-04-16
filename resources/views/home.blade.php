@@ -9,7 +9,7 @@
     </div>
 </div> --}}
 <div class="mt-3">
-    <h4 class="mg-b-0 tx-spacing--1 text-white header-text">Welcome to Dashboard</h4>
+    <h4 class="mg-b-0 tx-spacing--1 text-white header-text">Marketplaz - Contests</h4>
     <p class="text-white tx-20 secondary-text">
         Below is a list of contest which are currently active. Visit one of them to vote.
     </p>
