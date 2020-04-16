@@ -59,14 +59,16 @@
         <div class="container">
             <a href="" id="mainMenuOpen" class="burger-menu"><i data-feather="menu"></i></a>
             <div class="navbar-brand">
-            <a href="{{ url('/') }}" class="df-logo logo-text">
+            <a href="https://marketplaz.com/" class="df-logo logo-text">
                 <img src="{{ asset('/assets/imgs/logo.jpg') }}" height="40" alt="votes on marketplaz">
             </a>
             {{-- CONT<span>EST</span> --}}
             </div><!-- navbar-brand -->
             <div id="navbarMenu" class="navbar-menu-wrapper">
             <div class="navbar-menu-header">
-                <a href="{{ url('/') }}" class="df-logo">Cont<span>est</span></a>
+                <a href="https://marketplaz.com/" class="df-logo logo-text">
+                    <img src="{{ asset('/assets/imgs/logo.jpg') }}" height="30" alt="votes on marketplaz">
+                </a>
                 <a id="mainMenuClose" href=""><i data-feather="x"></i></a>
             </div><!-- navbar-menu-header -->
             </div><!-- navbar-menu-wrapper -->
