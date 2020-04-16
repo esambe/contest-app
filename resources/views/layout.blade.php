@@ -30,7 +30,7 @@
     <meta name="author" content="Esambe">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="../../assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/imgs/z.jpg') }}">
 
     <title>Contest App</title>
 
