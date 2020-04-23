@@ -17,7 +17,7 @@ class MakeAdminSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $user = User::find(1);
+        $user = User::find(2);
         $user->assignRole('super-admin');
         $user->givePermissionTo(Permission::all());
     }
