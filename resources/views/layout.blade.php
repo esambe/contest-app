@@ -12,15 +12,15 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Contest">
     <meta name="twitter:description" content="Contest App">
-    <meta name="twitter:image" content="http://themepixels.me/dashforge/img/dashforge-social.png">
+    <meta name="twitter:image" content="https://marketplaz.com/wp-content/uploads/2019/09/marketplaz_logo.jpeg">
 
     <!-- Facebook -->
-    <meta property="og:url" content="http://themepixels.me/dashforge">
+    <meta property="og:url" content="https://marketplaz.com">
     <meta property="og:title" content="Contest App">
     <meta property="og:description" content="Contest App">
 
-    <meta property="og:image" content="http://themepixels.me/dashforge/img/dashforge-social.png">
-    <meta property="og:image:secure_url" content="http://themepixels.me/dashforge/img/dashforge-social.png">
+    <meta property="og:image" content="https://marketplaz.com/wp-content/uploads/2019/09/marketplaz_logo.jpeg">
+    <meta property="og:image:secure_url" content="https://marketplaz.com/wp-content/uploads/2019/09/marketplaz_logo.jpeg">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="600">
@@ -153,8 +153,8 @@
     <script src="{{ asset('/lib/js-cookie/js.cookie.js') }}"></script>
     <script src="{{ asset('/assets/js/dashforge.settings.js') }}"></script>
 
-    <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script>
-    <script src="https://widget.northeurope.cloudapp.azure.com:9443/v0.1.0/mobile-money-widget-mtn.js"></script>
+    {{-- <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script>
+    <script src="https://widget.northeurope.cloudapp.azure.com:9443/v0.1.0/mobile-money-widget-mtn.js"></script> --}}
     @yield('scripts')
 
     <script>
