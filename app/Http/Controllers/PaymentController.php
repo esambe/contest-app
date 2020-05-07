@@ -36,7 +36,7 @@ class PaymentController extends Controller
 
             $country_code = '237';
             $collection = new MomoMtn();
-            $momoTransactionid = $collection->requestToPay($country_code.$request->number, '1', $payer_message, $payee_note);
+            $momoTransactionid = $collection->requestToPay($country_code.$request->number, $voting_charge, $payer_message, $payee_note);
 
             $init_trans_status = $collection->getCollectionTransactionStatus($momoTransactionid);
             $current_trans_status = $init_trans_status['status'];
@@ -44,6 +44,7 @@ class PaymentController extends Controller
             while($current_trans_status == 'PENDING'){
                 $init_trans_status = $collection->getCollectionTransactionStatus($momoTransactionid);
                 $current_trans_status = $init_trans_status['status'];
+
             }
 
             if($current_trans_status == "SUCCESSFUL") {
