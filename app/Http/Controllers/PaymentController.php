@@ -61,18 +61,19 @@ class PaymentController extends Controller
                 return back()->with('success', 'Payment successful and voted successfully for '. $contestant);
 
             }
-            else if($current_trans_status == "FAILED")
+            if($current_trans_status == "FAILED")
             {
                 return back()->with('danger', 'Payment Failed. Please try again.');
             }
-            else if($current_trans_status == "TIMEOUT")
-            {
-                return back()->with('danger', 'Payment timed out. Please try again.');
-            }
-            else if($current_trans_status == "REJECTED")
-            {
-                return back()->with('danger', 'Payment rejected.');
-            }
+
+            // else if($current_trans_status == "TIMEOUT")
+            // {
+            //     return back()->with('danger', 'Payment timed out. Please try again.');
+            // }
+            // else if($current_trans_status == "REJECTED")
+            // {
+            //     return back()->with('danger', 'Payment rejected.');
+            // }
             else {
                 return back()->with('danger', 'Payment unsuccessful. Unknown error occured');
             }
