@@ -84,7 +84,7 @@
                 <thead>
                     <th class="wp-10">{{ __('#ID') }}</th>
                     <th class="wp-20">{{ __('NAME') }}</th>
-                    <th class="wp-5">{{ __('ACTION') }}</th>
+                    {{-- <th class="wp-5">{{ __('ACTION') }}</th> --}}
                 </thead>
                 <tbody>
                     @php
