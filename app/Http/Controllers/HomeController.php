@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contest;
 use App\Contestant;
-use Illuminate\Http\Request;
+use App\Vote;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -34,7 +35,12 @@ class HomeController extends Controller
         $contest = Contest::find($id);
 
         $contestants = Contestant::where('contest_id', $id)->paginate(10);
+        $curr_voter = Vote::where('voter_id', Auth::user()->id)
+        ->where('contest_id', $contest->id)
+        ->latest()->first();
 
-        return view('contests.contestants.single-contest', compact('contestants', 'contest'));
+       // dd($curr_voter);
+
+        return view('contests.contestants.single-contest', compact('contestants', 'contest', 'curr_voter'));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contest;
 use App\Contestant;
+use App\User;
 use Illuminate\Http\Request;
 use Image;
 
@@ -17,8 +18,8 @@ class ContestController extends Controller
     public function index()
     {
         $contests = Contest::all();
-
-        return view('dashboard', compact('contests'));
+        $users = User::all();
+        return view('dashboard', compact('contests', 'users'));
     }
 
     /**

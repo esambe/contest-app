@@ -18,6 +18,10 @@ class Contest extends Model
         return $this->hasMany('App\Contestant', 'contest_id');
     }
 
+    public function contestant() {
+        return $this->hasOne('App\Contestant', 'contest_id');
+    }
+
     public function editPath() {
         return url("/edit/contest/{$this->id}-". Str::slug($this->name));
     }
