@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Contest;
 use App\Contestant;
 use App\Vote;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -31,11 +31,17 @@ class HomeController extends Controller
     }
 
     public function singleContest($id) {
-
+        // $this->middleware('auth');
         $contest = Contest::find($id);
-
         $contestants = Contestant::where('contest_id', $id)->paginate(10);
-        $curr_voter = Vote::where('voter_id', Auth::user()->id)
+
+        if(auth()->check()) {
+            $user_id = Auth::user()->id;
+        } else {
+            $user_id = -1;
+        }
+
+        $curr_voter = Vote::where('voter_id', $user_id)
         ->where('contest_id', $contest->id)
         ->latest()->first();
 
