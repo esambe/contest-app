@@ -31,7 +31,7 @@ class HomeController extends Controller
     }
 
     public function singleContest($id) {
-        $this->middleware('auth');
+        // $this->middleware('auth');
         $contest = Contest::find($id);
         $contestants = Contestant::where('contest_id', $id)->paginate(10);
 
