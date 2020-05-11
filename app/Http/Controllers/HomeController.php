@@ -38,7 +38,7 @@ class HomeController extends Controller
         if(auth()->check()) {
             $user_id = Auth::user()->id;
         } else {
-            $user_id = -1;
+            $user_id = 0;
         }
 
         $curr_voter = Vote::where('voter_id', $user_id)
