@@ -38,6 +38,8 @@
                 <th class="wp-20">{{ __('NAME') }}</th>
                 <th class="wp-10">{{ __('START DATE') }}</th>
                 <th class="wp-10">{{ __('END DATE') }}</th>
+                <th class="wp-10">{{ __('IS FREE') }}</th>
+                <th class="wp-10">{{ __('VOTER CHARGE') }}</th>
                 <th class="wp-5">{{ __('ACTION') }}</th>
             </thead>
             <tbody>
@@ -47,6 +49,25 @@
                         <td>{{ $contest->name }}</td>
                         <td>{{ $contest->start_date }}</td>
                         <td>{{ $contest->end_date }}</td>
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                @if ($contest->is_free == 1)
+                                    <form action="{{ route('make-paid', $contest->id) }}" method="POST" id="{{ $contest->id }}">
+                                        @csrf
+                                        <input type="checkbox" class="custom-control-input" id="customCheck{{ $contest->id }}" onChange="this.form.submit()" checked>
+                                        <label class="custom-control-label" for="customCheck{{ $contest->id }}"><em class="tx-success">Free</em></label>
+                                    </form>
+                                @else
+                                    <form action="{{ route('make-free', $contest->id) }}" method="POST" id="{{ $contest->id }}">
+                                        @csrf
+                                        <input type="checkbox" class="custom-control-input" id="customCheck{{ $contest->id }}"  onChange="this.form.submit()">
+                                        <label class="custom-control-label" for="customCheck{{ $contest->id }}"><em class="tx-danger">Paid</em></label>
+                                    </form>
+                                @endif
+
+                            </div>
+                        </td>
+                        <td class="tx-center">{{ $contest->voter_charge }} XAF</td>
                         <td class="d-flex">
                             <a href="{{ $contest->editPath() }}" class="btn btn-outline text-primary"><i class="fa fa-pencil"> Edit</i></a>
                             <a href="{{ $contest->showPath() }}" class="btn btn-outline text-success"><i class="fa fa-eye"> Goto</i></a>
@@ -56,6 +77,53 @@
                 @endforeach
             </tbody>
         </table>
+        <hr>
+        <div class="my-4">
+            <h1 class="tx-18 tx-medium">Users</h1>
+            <table id="contest-user" class="table">
+                <thead>
+                    <th class="wp-10">{{ __('#ID') }}</th>
+                    <th class="wp-20">{{ __('NAME') }}</th>
+                    <th class="wp-5">{{ __('ACTION') }}</th>
+                </thead>
+                <tbody>
+                    @php
+                        $i = 0;
+                    @endphp
+                    @foreach ($users as $user)
+                    @php
+                        $i++;
+                    @endphp
+                        <tr>
+                            <td>{{ $i }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>
+                                <button data-toggle="modal" data-target="#detail{{ $user->id }}">Voted For</button>
+                            </td>
+                        </tr>
+
+                        <div class="modal fade" id="detail{{ $user->id }}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="paymentTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group">
+                                            @foreach ($user->votes as $vote)
+                                               <li class="list-item d-flex justify-content-between"><span>{{ $vote->contest->name }} </span><span>{{ date('d M Y, H:m:s', strtotime($vote->contest->updated_at) ) }}</span></li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endsection

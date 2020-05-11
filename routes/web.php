@@ -19,6 +19,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/contest/contestant/{id}', 'HomeController@singleContest')->name('single-contest');
 Route::post('/vote', 'PaymentController@vote')->name('vote');
+Route::post('/free-vote', 'PaymentController@freeVote')->name('free-vote');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/orange-callback', 'PaymentController@orange_notif');
@@ -35,6 +36,8 @@ Route::group(['middleware' => ['auth', 'role:super-admin']], function () {
     Route::post('/add/contest', 'ContestController@store')->name('add-contest');
     Route::post('/update/contest/{id}', 'ContestController@update')->name('update-contest');
     Route::get('/delete/contest/{id}', 'ContestController@destroy')->name('delete-contest');
+    Route::post('/contest/make-free/{id}', 'DashboardController@makeFree')->name('make-free');
+    Route::post('/contest/make-paid/{id}', 'DashboardController@makePaid')->name('make-paid');
 
     // CONTESTANTS
     Route::get('/create/contestant', 'ContestantController@create')->name('create-contestant');
@@ -42,5 +45,6 @@ Route::group(['middleware' => ['auth', 'role:super-admin']], function () {
     Route::post('/add/contestant', 'ContestantController@store')->name('add-contestant');
     Route::post('/update/contestant/{id}', 'ContestantController@update')->name('update-contestant');
     Route::get('/delete/contestant/{id}', 'ContestantController@destroy')->name('delete-contestant');
+
 });
 

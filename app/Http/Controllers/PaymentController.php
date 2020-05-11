@@ -36,7 +36,7 @@ class PaymentController extends Controller
 
             $country_code = '237';
             $collection = new MomoMtn();
-            $momoTransactionid = $collection->requestToPay($country_code.$request->number, $voting_charge, $payer_message, $payee_note);
+            $momoTransactionid = $collection->requestToPay($country_code.$request->number, '1', $payer_message, $payee_note);
 
             $init_trans_status = $collection->getCollectionTransactionStatus($momoTransactionid);
             $current_trans_status = $init_trans_status['status'];
@@ -44,7 +44,6 @@ class PaymentController extends Controller
             while($current_trans_status == 'PENDING'){
                 $init_trans_status = $collection->getCollectionTransactionStatus($momoTransactionid);
                 $current_trans_status = $init_trans_status['status'];
-
             }
 
             if($current_trans_status == "SUCCESSFUL") {
@@ -56,6 +55,7 @@ class PaymentController extends Controller
                 // persist some data in your application
                 $vote->contest_id = $request->contest_id;
                 $vote->contestant_id = $request->contestant_id;
+                $vote->voter_id     = $request->voter_id;
                 $vote->vote_count = $count + 1;
                 $vote->save();
                 return back()->with('success', 'Payment successful and voted successfully for '. $contestant);
@@ -162,6 +162,7 @@ class PaymentController extends Controller
             // persist some data in your application
             $vote->contest_id = $transaction->contest_id;
             $vote->contestant_id = $transaction->contestant_id;
+            $vote->voter_id     = Auth::user()->id;
             $vote->vote_count = $count + 1;
             $vote->save();
             // dd($_contest->name);
@@ -171,6 +172,24 @@ class PaymentController extends Controller
         {
             return redirect('/contest/contestant/'.$contest->id.'-'.Str::slug($contest->name))->with('danger', 'Payment failed');
         }
+    }
+
+    public function freeVote(Request $request) {
+
+        // $contest = Contest::where('id', '=', $request->contest_id)->first();
+
+        $vote = new Vote;
+        $count = Vote::where('contestant_id', $request->contestant_id)->latest()->value('vote_count');
+
+        $contestant = Contestant::where('id', $request->contestant_id)->value('name');
+        // persist some data in your application
+        $vote->contest_id = $request->contest_id;
+        $vote->contestant_id = $request->contestant_id;
+        $vote->voter_id     = $request->voter_id;
+        $vote->vote_count = $count + 1;
+        $vote->save();
+
+        return back()->with('success', 'Payment successful and voted successfully for '. $contestant);
     }
 
 }
