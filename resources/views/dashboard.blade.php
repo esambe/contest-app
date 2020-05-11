@@ -97,12 +97,12 @@
                         <tr>
                             <td>{{ $i }}</td>
                             <td>{{ $user->name }}</td>
-                            <td>
+                            {{-- <td>
                                 <button data-toggle="modal" data-target="#detail{{ $user->id }}">Voted For</button>
-                            </td>
+                            </td> --}}
                         </tr>
 
-                        <div class="modal fade" id="detail{{ $user->id }}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="paymentTitle" aria-hidden="true">
+                        {{-- <div class="modal fade" id="detail{{ $user->id }}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="paymentTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -119,7 +119,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     @endforeach
                 </tbody>
             </table>
