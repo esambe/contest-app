@@ -18,10 +18,14 @@ use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
 
     public function vote(Request $request)
     {
+
         if($request->payment_method == 'mtn') {
 
             $request->validate([
