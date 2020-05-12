@@ -52,6 +52,7 @@
             <thead>
                 <th class="wp-10">{{ __('#ID') }}</th>
                 <th class="wp-20">{{ __('NAME') }}</th>
+                <th class="wp-20">{{ __('VOTES') }}</th>
                 <th class="wp-10">{{ __('EMAIL') }}</th>
                 <th class="wp-10">{{ __('PHONE') }}</th>
                 <th class="wp-5">{{ __('CITY') }}</th>
@@ -75,6 +76,7 @@
                                 </div>
                             </div>
                         </td>
+                        <td>{{ $contestant->votes->last()->vote_count ?? '0' }} Votes</td>
                         <td>{{ $contestant->email }}</td>
                         <td>{{ $contestant->phone }}</td>
                         <td>{{ $contestant->city }}</td>
