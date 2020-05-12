@@ -157,7 +157,7 @@
                                                 <input type="hidden" name="contestant_id" value="{{ $contestant->id}}">
                                                 <input type="hidden" name="payment_method" value="mtn">
                                                 <input type="hidden" name="voter_id" value="{{ Auth::user()->id }}">
-                                                <div class="input-group mg-b-10">
+                                                {{-- <div class="input-group mg-b-10">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1">+237</span>
                                                     </div>
@@ -171,7 +171,7 @@
                                                     autocomplete="off"
                                                     max="9"
                                                     >
-                                                </div>
+                                                </div> --}}
                                                 <button class="btn btn-cancel btn-block">PROCEED</button>
                                             </form>
                                         @endif
