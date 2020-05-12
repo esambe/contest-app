@@ -14,7 +14,7 @@
 
 @section('hero')
     <div class="jumbotron banner">
-        <h4 class="mg-b-0 tx-spacing--1 header-text text-white">Welcome to - <span class="secondary-text">{{ $contest->name }}</span></h4>
+        <h4 class="mg-b-0 tx-spacing--1 header-text text-white">Welcome  to -  <span class="secondary-text">{{ $contest->name }}</span></h4>
         <p class="lead text-white">{{ $contest->description }}</p>
         <hr class="my-4">
         <p class="lead">
@@ -91,8 +91,8 @@
                                 {{ $contestant->id }}
                             </div> --}}
                             <div class="d-flex align-items-center">
-                                <div class="avatar avatar-xs mr-2"><img src="https://www.w3schools.com/howto/img_avatar2.png" class="rounded-circle" alt=""></div>
-                                <span class="secondary-text">{{ $contestant->name }}</span>
+                                <div class="avatar avatar-xs mr-2"><img src="{{ $contestant->user_img ? asset('/thumbnail/'.$contestant->user_img) : 'https://www.w3schools.com/howto/img_avatar2.png' }}" class="rounded-circle" alt=""></div>
+                                <span class="secondary-text-">{{ $contestant->name }}</span>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -115,7 +115,7 @@
                     <img src="{{ $contestant->user_img ? asset('/thumbnail/'.$contestant->user_img) : 'https://www.gravatar.com/avatar/EMAIL_MD5?d=https%3A%2F%2Fui-avatars.com%2Fapi%2F/Lasse+Rafn/128' }}" class="rounded-circle avatar-img" alt="">
                 </div>
                 <div class="card-body">
-                    <p class="tx-16 tx-bold text-center secondary-text tx-22">{{ $contestant->name}}</p>
+                    <p class="tx-16 tx-bold text-center secondary-text- tx-22">{{ $contestant->name}}</p>
                     <p class="tx-15 text-center tx-gray-500"><i class="fa fa-map-marker"></i> {{ $contestant->city }}</p>
                     <p class="tx-15 text-center">{{ $contestant->votes->last()->vote_count ?? '0' }} Votes</p>
                     <div class="card-footer">

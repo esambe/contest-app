@@ -88,7 +88,6 @@ class ContestController extends Controller
         $contest = Contest::where('id', '=', $single->id)->first();
 
         $contestants = Contestant::all();
-
         return view('contests.contestants', compact('contest', 'contestants'));
     }
 

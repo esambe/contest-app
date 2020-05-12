@@ -22,7 +22,7 @@
                     <img src="{{ $contest->img ? asset('/uploads/'.$contest->img) : 'https://i.ytimg.com/vi/6BiqdXF9wNw/maxresdefault.jpg' }}" class="card-img-top" alt="">
                 </div>
                 <div class="card-body">
-                    <p class="tx-16 tx-bold text-center tx-gray-500 secondary-text">{{ $contest->name }}</p>
+                    <p class="tx-16 tx-bold text-center tx-gray-500 secondary-text-">{{ $contest->name }}</p>
                     <div class="card-footer">
                         <div class="d-flex justify-content-center">
                             <a href="{{ $contest->singlePath() }}" class="btn btn-cancel btn-block">GOTO CONTEST</a>
