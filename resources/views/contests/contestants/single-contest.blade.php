@@ -13,10 +13,22 @@
 @endsection
 
 @section('hero')
-    <div class="jumbotron banner">
-        <h4 class="mg-b-0 tx-spacing--1 header-text text-white">Welcome  to -  <span class="secondary-text">{{ $contest->name }}</span></h4>
-        <p class="lead text-white">{{ $contest->description }}</p>
-        <hr class="my-4">
+<div class="jumbotron banner">
+    <h4 class="mg-b-0 tx-spacing--1 header-text text-white">Welcome  to -  <span class="secondary-text">{{ $contest->name }}</span></h4>
+    <p class="lead text-white">{{ $contest->description }}</p>
+    @php
+        $today_date = Carbon\Carbon::now();
+        $exp_date = $contest->end_date;
+        $data_difference = $today_date->diffInDays($exp_date, false);
+    @endphp
+    @if ($data_difference < 0)
+        <div class="alert alert-warning">
+            <h4><i class="fa fa-bell"></i> NOTICE.</h4>
+            <hr>
+            VOTING FOR THIS CONTEST HAS ENDED. THANKS FOR YOUR COMMITMENT.
+        </div>
+    @endif
+    <hr class="my-4">
         <p class="lead">
             @if ($contestants->count() != 0)
                 <button class="btn btn-cancel" data-toggle="modal" data-target="#ranking">RANKING</button>
@@ -119,10 +131,19 @@
                     <p class="tx-15 text-center tx-gray-500"><i class="fa fa-map-marker"></i> {{ $contestant->city }}</p>
                     <p class="tx-15 text-center">{{ $contestant->votes->last()->vote_count ?? '0' }} Votes</p>
                     <div class="card-footer">
+                        @php
+                            $today_date = Carbon\Carbon::now();
+                            $exp_date = $contest->end_date;
+                            $data_difference = $today_date->diffInDays($exp_date, false);
+                        @endphp
                         <div class="">
                             <div class="btn-group btn-block">
                                 <button data-toggle="modal" data-target="#detail{{ $contestant->id }}" aria-expanded="false" class="btn btn-secondary">Detail</button>
-                                <button data-toggle="modal" data-target="#payment{{ $contestant->id }}" aria-expanded="false" class="btn btn-vote">Vote</button>
+                                @if ($data_difference < 0)
+                                <button class="btn btn-danger" disabled>Vote Ended</button>
+                                @else
+                                    <button data-toggle="modal" data-target="#payment{{ $contestant->id }}" aria-expanded="false" class="btn btn-vote">Vote</button>
+                                @endif
                             </div>
                         </div>
                     </div>
