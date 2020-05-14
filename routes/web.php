@@ -13,7 +13,7 @@
 
 
 
-Auth::routes(['register' => true, 'verify' => true]);
+Auth::routes(['register' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
